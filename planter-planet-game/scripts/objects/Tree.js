@@ -1,10 +1,10 @@
 // Defines the class for Tree object
 export default class Tree {
     constructor() {
-      this.treeStages = ["seed", "sprout", "sapling", "young", "mature"];
+      this.treeStages = ["Seedling", "Sprout", "Sapling", "Young","Half-Life","Adult","Mature"];
       this.currentStage = 0;
       this.currentStageName = this.treeStages[this.currentStage];
-      // Will be caculated based on stage and tree rarity
+      // Will be calculated based on stage and tree rarity
       this.threshXP = 100;
       this.currentXP = 0;
       // Will be replaced with test DNA

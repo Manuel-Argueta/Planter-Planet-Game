@@ -34,6 +34,15 @@ app.get('/', (req,res)=> {
         });
 });
 
+//Add auth
+app.get('/get-key', (req,res)=> {
+    res.status(200).send({
+        status: 200,
+        key: process.env.CRYPT_KEY
+        });
+});
+
+
 app.post('/create-player', (req,res) => {
     const incomingData = req.body;
     const newPlayer = new Player(incomingData);
