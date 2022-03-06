@@ -167,3 +167,9 @@ function updateLocalStorage(player) {
     let playerToUpload = CryptoJS.AES.encrypt(JSON.stringify(player),"secret")
     window.localStorage.setItem("player", playerToUpload);
 }
+
+//Create fucnction to backup data in MongoDB on tab close
+
+// function backupUserProgress() {
+
+// }
