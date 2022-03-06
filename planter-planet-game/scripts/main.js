@@ -1,6 +1,7 @@
 //Import tree class
 import Tree from "./objects/Tree.js";
 import updateStatsUI from "./data.js";
+import createStoreObjects from "./store.js";
 // Getting the main HTML elements
 const stageImage = document.getElementById("stageImage");
 const progressBar = document.getElementById("stage-progress");
@@ -25,9 +26,13 @@ let currentPlayer = {};
 const playerRanks = ["Dogwater Farmer", "Farmer", "Bio Hero", "Spawner","Giga Farmer", "God"]
 
 // Sets up environment on page load
+createStoreObjects()
 window.onload = function() {
     setup()
 };
+
+setInterval(autoUpdateXP, 1000)
+
 
 function setup() {
     loadPlayer();
@@ -36,7 +41,20 @@ function setup() {
     updateStatsUI();
 }
 
+function autoUpdateXP() {
+    loadPlayer()
+    let treeToLoad = currentPlayer.currentTree;
+    if (checkTreeStage()) {
+        treeToLoad.currentXP+=currentPlayer.currentAutoXPRate;
+        currentPlayer.currentBarXP += calcBarPercentage()
+        currentPlayer.currentSOIL+=currentPlayer.currentAutoXPRate;;
+        updateLocalStorage(currentPlayer);
+        setup()
+    }
+}
+
 function updateXP() {
+    loadPlayer()
     let treeToLoad = currentPlayer.currentTree;
     if (checkTreeStage()) {
         treeToLoad.currentXP+=currentPlayer.currentXPRate;
@@ -55,16 +73,17 @@ function checkTreeStage() {
         treeToLoad.currentXP = 0;
         currentPlayer.currentBarXP = 0
         //testing difficulty increase
-        treeToLoad.threshXP *=10;
+        treeToLoad.threshXP *= 5;
         progressBar.style.width = currentPlayer.currentBarXP  + "%";
         treeToLoad.currentStage++;
         treeToLoad.currentStageName = treeToLoad.treeStages[treeToLoad.currentStage];
         updateLocalStorage(currentPlayer);
         setup()
         return false;
-    } else if (treeToLoad.currentStage == 6) {
+    } else if (treeToLoad.currentStage == 6 || currentPlayer.cureenBarXP >= 100) {
         let newTree = new Tree();
-        treeToLoad = newTree;
+        currentPlayer.currentTree = newTree;
+        currentPlayer.currentBarXP = 0;
         currentPlayer.treesGrown++;
         ascendRank(currentPlayer.treesGrown,currentPlayer.rankIndex)
         updateLocalStorage(currentPlayer);
@@ -75,8 +94,10 @@ function checkTreeStage() {
 function calcBarPercentage() {
     let newStep = 0;
     let treeToLoad = currentPlayer.currentTree;
-    newStep = currentPlayer.currentXPRate/(treeToLoad.threshXP/100)
-    console.log(newStep)
+    //Fix algorithm not ending up at 100
+    newStep = (currentPlayer.currentXPRate+currentPlayer.currentAutoXPRate)/(treeToLoad.threshXP/10)
+    // console.log(treeToLoad.threshXP)
+    // console.log(newStep)
     return newStep
 }
 
@@ -94,9 +115,9 @@ function ascendRank(treesGrown,rankIndex) {
         currentPlayer.rankLevel = "";
         return 
     } else if (treesGrown >= ranksTresh[floorIndex] && currentPlayer.rankLevel == DEFAULT_RANK) {
-        currentPlayer.rankLevel = DEFAULT;
+        currentPlayer.rankLevel = DEFAULT_RANK-1;
     } else if (treesGrown >= ranksTresh[floorIndex+1] && currentPlayer.rankLevel == DEFAULT_RANK-1) {
-        currentPlayer.rankLevel = 1;
+        currentPlayer.rankLevel = DEFAULT_RANK-2;
     } else if (treesGrown >= ranksTresh[capIndex] && currentPlayer.rankLevel ==  DEFAULT_RANK-2) {
         currentPlayer.rankIndex++;
         currentPlayer.playerRank = playerRanks[currentPlayer.rankIndex]

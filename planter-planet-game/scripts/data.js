@@ -6,6 +6,14 @@ const soilDisplay = document.getElementById("soil-count")
 const XPDisplay = document.getElementById("XPDisplay")
 const XPRateDisplay = document.getElementById("XPRateDisplay")
 const AutoXPRateDisplay = document.getElementById("AutoXPRateDisplay")
+const microBoostCountDisplay = document.getElementById("microBoost-display")
+const superBoostCountDisplay = document.getElementById("superBoost-display")
+const ultraBoostCountDisplay = document.getElementById("ultraBoost-display")
+
+const droidFarmerCountDisplay = document.getElementById("droidFarm-display")
+const droidClanCountDisplay = document.getElementById("droidClan-display")
+const droidArmyCountDisplay = document.getElementById("droidArmy-display")
+
 
 
 
@@ -19,8 +27,17 @@ function updateStatsUI() {
     treesGrownDisplay.innerHTML = "Trees Grown: " + currentPlayer.treesGrown
     soilDisplay.innerHTML = "Current SOIL: " + currentPlayer.currentSOIL
     XPDisplay.innerHTML = "Current XP: " + currentPlayer.currentTree.currentXP;
-    XPRateDisplay.innerHTML = "Current XP Rate: " + currentPlayer.currentXPRate;
-    AutoXPRateDisplay.innerHTML = "Current Auto XP Rate: " + currentPlayer.currentAutoXPRate;
+    XPRateDisplay.innerHTML = "Current XP Rate: " + currentPlayer.currentXPRate + "/ click";
+    AutoXPRateDisplay.innerHTML = "Current Auto XP Rate: " + currentPlayer.currentAutoXPRate + "/ second";
+
+    //Figure out how to access individual boosts and bot values
+    // microBoostCountDisplay.innerHTML = "Boosts Owned: " + currentPlayer.currentUpgrades;
+    // superBoostCountDisplay.innerHTML = "Boosts Owned: " + currentPlayer.currentAutoXPRate;
+    // ultraBoostCountDisplay.innerHTML = "Boosts Owned: " + currentPlayer.currentAutoXPRate;
+
+    // droidFarmerCountDisplay.innerHTML = "Bots Owned: " + currentPlayer.currentAutoXPRate;
+    // droidClanCountDisplay.innerHTML = "Bots Owned: " + currentPlayer.currentAutoXPRate;
+    // droidArmyCountDisplay.innerHTML = "Bots Owned: " + currentPlayer.currentAutoXPRate;
 }
 
 function loadPlayer() {
@@ -28,4 +45,4 @@ function loadPlayer() {
     currentPlayer = JSON.parse(playerToLoad);
 }
 
-export default updateStatsUI
+export default updateStatsUI;
