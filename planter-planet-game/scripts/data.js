@@ -26,10 +26,10 @@ function updateStatsUI() {
     rankDisplay.innerHTML = "Rank: " + currentPlayer.playerRank + " " + currentPlayer.rankLevel;
     treesGrownDisplay.innerHTML = "Trees Grown: " + currentPlayer.treesGrown
     soilDisplay.innerHTML = "Current SOIL: " + currentPlayer.currentSOIL
-    XPDisplay.innerHTML = "Current XP: " + currentPlayer.currentTree.currentXP;
-    XPRateDisplay.innerHTML = "Current XP Rate: " + currentPlayer.currentXPRate + "/ click";
+    XPDisplay.innerHTML = "Current XP: " + currentPlayer.currentTree.currentXP.toFixed(1);
+    XPRateDisplay.innerHTML = "Current XP Rate: " + currentPlayer.currentXPRate.toFixed(1) + "/ click";
     AutoXPRateDisplay.innerHTML = "Current Auto XP Rate: " + currentPlayer.currentAutoXPRate + "/ second";
-
+    //console.log(currentPlayer.currentUpgrades)
     //Figure out how to access individual boosts and bot values
     // microBoostCountDisplay.innerHTML = "Boosts Owned: " + currentPlayer.currentUpgrades;
     // superBoostCountDisplay.innerHTML = "Boosts Owned: " + currentPlayer.currentAutoXPRate;
