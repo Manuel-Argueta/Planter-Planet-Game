@@ -5,6 +5,8 @@ import updateStatsUI from './data.js'
 let currentPlayer = {}
 let boostOptions = []
 let botOptions = []
+let boostElements = []
+let botElements = []
 
 //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice)
 boostOptions.push(new Boost("Micronutrient Boost", 1.1, 150, 100, "microBoost"))
@@ -17,108 +19,96 @@ botOptions.push(new Bot("Droid Farmer Clan", 5, 50, 500, "droidClan"))
 botOptions.push(new Bot("Droid Farmer Army", 10, 25, 5000, "droidArmy"))
 
 //Add HTML DOM elements creation
-function createStoreObjects() {
+export function createStoreObjects() {
         //Renders all boot and bot options based on lines defined above
         for (let i = 0; i < boostOptions.length; i++) {
             const parentElement = document.getElementById('boost-sub-container')
             let tempContainer = document.createElement('div')
-            let tempButton = document.createElement('button')
-            let tempPricePara = document.createElement('p')
-            let tempBoostPara = document.createElement('p')
-            let tempEntityPara = document.createElement('p')
+            let tempButton =document.createElement('button')
 
-            tempContainer.id = boostOptions[i].boostContainerID + "-sub-container"
+            tempContainer.id = boostOptions[i].boostContainerID 
+            tempContainer.innerHTML = "Price: " + boostOptions[i].boostPrice + "<br/>"
+            + "Boost Amount: " + boostOptions[i].boostMultiplier + "<br/>" + "Boosts Owned: " + 0 + "<br/>";
             parentElement.appendChild(tempContainer)
-
+             
             tempButton.innerHTML = boostOptions[i].boostName
             tempButton.id = boostOptions[i].boostContainerID + "-button"
             tempButton.addEventListener('click', function() {addUserBoosts(boostOptions[i])})
             tempContainer.appendChild(tempButton)
 
-            tempPricePara.id = boostOptions[i].boostContainerID + "-price"
-            tempPricePara.innerHTML = "Price: " + boostOptions[i].boostPrice
-            tempContainer.appendChild(tempPricePara)
-
-            tempBoostPara.id = boostOptions[i].boostContainerID + "-multi"
-            tempBoostPara.innerHTML = "Boost Amount: " + boostOptions[i].boostMultiplier
-            tempContainer.appendChild(tempBoostPara)
-
-            tempEntityPara.id = boostOptions[i].boostContainerID + "-display"
-            tempEntityPara.innerHTML = "Boosts Owned: " + 0
-            tempContainer.appendChild(tempEntityPara)
+            boostElements.push(tempContainer)
         }
 
         for (let i = 0; i < botOptions.length; i++) {
             const parentElement = document.getElementById('bot-sub-container')
             let tempContainer = document.createElement('div')
             let tempButton = document.createElement('button')
-            let tempPricePara = document.createElement('p')
-            let tempBoostPara = document.createElement('p')
-            let tempEntityPara = document.createElement('p')
 
-
-            tempContainer.id = botOptions[i].botContainerID + "-sub-container"
+            tempContainer.id = botOptions[i].botContainerID
+            tempContainer.innerHTML = "Price: " + botOptions[i].botPrice + "<br/>"
+            + "Bot Auto XP Increase: " + botOptions[i].botAutoIncrease + "<br/>" + "Bots Owned: " + 0 + "<br/>";
             parentElement.appendChild(tempContainer)
 
             tempButton.innerHTML = botOptions[i].botName
             tempButton.id = botOptions[i].botContainerID + "-button"
             tempButton.addEventListener('click', function() {addUserBots(botOptions[i])})
             tempContainer.appendChild(tempButton)
-
-            tempPricePara.id = botOptions[i].botContainerID + "-price"
-            tempPricePara.innerHTML = "Price: " + botOptions[i].botPrice
-            tempContainer.appendChild(tempPricePara)
-
-            tempBoostPara.id = botOptions[i].botContainerID + "-multi"
-            tempBoostPara.innerHTML = "Auto XP Rate: " + botOptions[i].botAutoIncrease
-            tempContainer.appendChild(tempBoostPara)
-
-            tempEntityPara.id = boostOptions[i].boostContainerID + "-display"
-            tempEntityPara.innerHTML = "Bots Owned: " + 0
-            tempContainer.appendChild(tempEntityPara)
+            botElements.push(tempContainer)
         }
 }
 
 function addUserBoosts(boost) {
     loadPlayer()
-    if (currentPlayer.currentSOIL >= boost.boostPrice &&  boost.boostEntities < boost.maxEntities) {
-        boost.boostEntities++;
-        currentPlayer.currentUpgrades.push(boost)
-        currentPlayer.currentXPRate *= (boost.boostMultiplier)
-        currentPlayer.currentSOIL -= boost.boostPrice
-    } else if (currentPlayer.currentSOIL >= boost.botPrice) {
-        boost.boostEntities++;
-        currentPlayer.currentXPRate *= (boost.boostMultiplier)
-        currentPlayer.currentSOIL -= boost.boostPrice
+    if (currentPlayer.currentUpgrades.hasOwnProperty(boost.boostContainerID)) {
+        let currBoost = currentPlayer.currentUpgrades[boost.boostContainerID]
+        if (currentPlayer.currentSOIL >= currBoost.boostPrice) {
+        currentPlayer.currentSOIL -= currBoost.boostPrice;
+        currentPlayer.currentXPRate *= currBoost.boostMultiplier;
+        currBoost.boostEntities++;
+        currBoost.boostPrice *= 2;
+        currentPlayer.currentUpgrades[boost.boostContainerID] = currBoost
+        console.log(currentPlayer.currentUpgrades)
+        } else {
+            console.log("cant afford " + currBoost.boostName)
+        }
+    } else {
+        currentPlayer.currentUpgrades[boost.boostContainerID] = boost
     }
     updateLocalStorage(currentPlayer)
     updateStatsUI()
+    updateStoreUI()
 }
 
 function addUserBots(bot) {
     loadPlayer()
-    if (currentPlayer.currentSOIL >= bot.botPrice && bot.botEntities < bot.maxEntities) {
-        bot.botEntities++;
-        currentPlayer.currentUpgrades.push(bot)
-        console.log("Purchased " + bot.botName)
-        console.log("New Rate: " + bot.botAutoIncrease)
-        console.log("Purchase Price: " + bot.boostPrice)
-        currentPlayer.currentAutoXPRate += (bot.botAutoIncrease)
-        currentPlayer.currentSOIL -= bot.botPrice
-    } else if (currentPlayer.currentSOIL >= bot.botPrice) {
-        bot.botEntities++;
-        console.log("Purchased " + bot.botName)
-        console.log("New Rate: " + bot.boostMultiplier*bot.botEntities)
-        console.log("Purchase Price: " + bot.boostPrice)
-        currentPlayer.currentAutoXPRate += (bot.botAutoIncrease)
-        currentPlayer.currentSOIL -= bot.botPrice
+    if (currentPlayer.currentUpgrades.hasOwnProperty(bot.botContainerID)) {
+        let currBot = currentPlayer.currentUpgrades[bot.botContainerID]
+        if (currentPlayer.currentSOIL >= currBot.botPrice) {
+        currentPlayer.currentSOIL -= currBot.botPrice;
+        currentPlayer.currentAutoXPRate += currBot.botAutoIncrease;
+        currBot.botEntities++;
+        currBot.botPrice *= 2;
+        currentPlayer.currentUpgrades[bot.botContainerID] = currBot
+        console.log(currentPlayer.currentUpgrades)
+        } else {
+            console.log("cant afford " + currBot.botName)
+        }
+    } else {
+        currentPlayer.currentUpgrades[bot.botContainerID] = bot
     }
     updateLocalStorage(currentPlayer)
     updateStatsUI()
 }
 
-function findInList(elem,arr) {
-    return arr.filter(x => x == elem)
+function updateStoreUI() {
+    for (let i = 0; i > boostElements.length; i++) {
+        if (currentPlayer.currentUpgrades.hasOwnProperty(boostElements[i].id)) {
+            console.log("updated")
+        boostElements[i].innerHTML = "Price: " + currentPlayer.currentUpgrades[boostElements[i].id].boostPrice  + "<br/>"
+        + "Boost Amount: " + currentPlayer.currentUpgrades[boostElements[i].id].boostMultiplier + "<br/>" + "Boosts Owned: " + 
+        currentPlayer.currentUpgrades[boostElements[i].id].boostInstances + "<br/>";
+        }
+    }
 }
 
 function loadPlayer() {
@@ -129,8 +119,6 @@ function loadPlayer() {
 function updateLocalStorage(player) {
     let playerToUpload = CryptoJS.AES.encrypt(JSON.stringify(player), "secret")
     window.localStorage.setItem("player", playerToUpload);
-    console.log("saved after purchase")
 }
 
-export default createStoreObjects;
 

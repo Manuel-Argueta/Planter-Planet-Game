@@ -1,7 +1,7 @@
 //Import tree class
 import Tree from "./objects/Tree.js";
 import updateStatsUI from "./data.js";
-import createStoreObjects from "./store.js";
+import {createStoreObjects} from "./store.js";
 // Getting the main HTML elements
 const stageImage = document.getElementById("stageImage");
 const progressBar = document.getElementById("stage-progress");
@@ -28,14 +28,13 @@ const playerRanks = ["Dogwater Farmer", "Farmer", "Bio Hero", "Spawner","Giga Fa
 // Sets up environment on page load
 createStoreObjects()
 window.onload = function() {
-    setup()
+    initPlayer();
+    setup();
 };
-
-setInterval(autoUpdateXP, 1000)
 
 
 function setup() {
-    loadPlayer();
+    loadPlayer()
     loadStage();
     loadProgress();
     updateStatsUI();
@@ -43,10 +42,9 @@ function setup() {
 
 function autoUpdateXP() {
     loadPlayer()
-    let treeToLoad = currentPlayer.currentTree;
     if (checkTreeStage()) {
-        treeToLoad.currentXP+=currentPlayer.currentAutoXPRate;
-        currentPlayer.currentBarXP += calcBarPercentage()
+        currentPlayer.currentTree.currentXP+=currentPlayer.currentAutoXPRate;
+        currentPlayer.currentBarXP += calcAutoBarPercentage()
         currentPlayer.currentSOIL+=currentPlayer.currentAutoXPRate;;
         updateLocalStorage(currentPlayer);
         setup()
@@ -55,17 +53,17 @@ function autoUpdateXP() {
 
 function updateXP() {
     loadPlayer()
-    let treeToLoad = currentPlayer.currentTree;
     if (checkTreeStage()) {
-        treeToLoad.currentXP+=currentPlayer.currentXPRate;
-        currentPlayer.currentBarXP += calcBarPercentage()
-        currentPlayer.currentSOIL++;
+        currentPlayer.currentTree.currentXP+=currentPlayer.currentXPRate;
+        currentPlayer.currentBarXP += calcManualBarPercentage()
+        currentPlayer.currentSOIL+=currentPlayer.currentXPRate;;
         updateLocalStorage(currentPlayer);
         setup()
     }
 }
 
 function checkTreeStage() {
+    loadPlayer()
     let treeToLoad = currentPlayer.currentTree;
     if (treeToLoad.currentXP < treeToLoad.threshXP) {
         return true;
@@ -73,14 +71,14 @@ function checkTreeStage() {
         treeToLoad.currentXP = 0;
         currentPlayer.currentBarXP = 0
         //testing difficulty increase
-        treeToLoad.threshXP *= 5;
+        treeToLoad.threshXP *= 100;
         progressBar.style.width = currentPlayer.currentBarXP  + "%";
         treeToLoad.currentStage++;
         treeToLoad.currentStageName = treeToLoad.treeStages[treeToLoad.currentStage];
         updateLocalStorage(currentPlayer);
         setup()
         return false;
-    } else if (treeToLoad.currentStage == 6 || currentPlayer.cureenBarXP >= 100) {
+    } else if (treeToLoad.currentStage == treeToLoad.treeStages.length-1 || currentPlayer.cureenBarXP >= 100) {
         let newTree = new Tree();
         currentPlayer.currentTree = newTree;
         currentPlayer.currentBarXP = 0;
@@ -88,16 +86,21 @@ function checkTreeStage() {
         ascendRank(currentPlayer.treesGrown,currentPlayer.rankIndex)
         updateLocalStorage(currentPlayer);
         setup()
+        return false
     }
 }
 
-function calcBarPercentage() {
+function calcAutoBarPercentage() {
     let newStep = 0;
     let treeToLoad = currentPlayer.currentTree;
-    //Fix algorithm not ending up at 100
-    newStep = (currentPlayer.currentXPRate+currentPlayer.currentAutoXPRate)/(treeToLoad.threshXP/10)
-    // console.log(treeToLoad.threshXP)
-    // console.log(newStep)
+    newStep = (100/treeToLoad.threshXP)*(currentPlayer.currentAutoXPRate)
+    return newStep
+}
+
+function calcManualBarPercentage() {
+    let newStep = 0;
+    let treeToLoad = currentPlayer.currentTree;
+    newStep = (100/treeToLoad.threshXP)*(currentPlayer.currentXPRate)
     return newStep
 }
 
@@ -138,7 +141,7 @@ function loadStage() {
     stageImage.src = treeStages[treeToLoad.currentStage];
 }
 
-function loadPlayer() {
+function initPlayer() {
     statsContainer.hidden = true;
     gameContainer.hidden = true;
     shopContainer.hidden = true;
@@ -154,11 +157,13 @@ function loadPlayer() {
         shopContainer.hidden = false;
         let playerToLoad = CryptoJS.AES.decrypt(window.localStorage.getItem("player"),"secret").toString(CryptoJS.enc.Utf8)
         currentPlayer = JSON.parse(playerToLoad);
+        setInterval(autoUpdateXP, 1000)
     }
 }
 
 function createNewPlayer() {
     let genesisTree = new Tree();
+    let upgradeMap = new Map();
     let newPlayer = {
         username: usernameField.value,
         //IPFS link for NFT minted upon game connection
@@ -171,16 +176,23 @@ function createNewPlayer() {
         address: "0x0000000000000000000000000",
         currentSOIL: 0,
         currentTree: genesisTree,
-        currentUpgrades: [],
+        currentUpgrades: upgradeMap,
         currentXPRate: 1,
         currentAutoXPRate: 0,
         currentBarXP: 0
     };
+    
     updateLocalStorage(newPlayer);
     currentPlayer = newPlayer;
-    setup()
     usernameField.hidden = true;
     beginButton.hidden = true;
+    setup()
+    setInterval(autoUpdateXP, 1000)
+}
+
+function loadPlayer() {
+    let playerToLoad = CryptoJS.AES.decrypt(window.localStorage.getItem("player"), "secret").toString(CryptoJS.enc.Utf8)
+    currentPlayer = JSON.parse(playerToLoad);
 }
 
 //How to hide secret?
