@@ -9,5 +9,6 @@ export default class Bot {
       this.botContainerID = botContainerID;
       this.type = "bot"
       this.rateType= "AutoXP"
+      this.increaseType = "multi"
     }
 }

@@ -1,7 +1,8 @@
 //Import tree class
 import Tree from "./objects/Tree.js";
-import updateStatsUI from "./data.js";
+import updateStatsUI from "./data.js"
 import {createStoreObjects} from "./store.js";
+
 // Getting the main HTML elements
 const stageImage = document.getElementById("stageImage");
 const progressBar = document.getElementById("stage-progress");
@@ -22,28 +23,27 @@ beginButton.addEventListener("click", createNewPlayer);
 // Defines empty object where the players information will be stored and manipulated
 let currentPlayer = {};
 
+
 //Can be added to
 const playerRanks = ["Dogwater Farmer", "Farmer", "Bio Hero", "Spawner","Giga Farmer", "God"]
 
-// Sets up environment on page load
-createStoreObjects()
-
 //Not loading in at first 
 window.onload = function() {
-    initPlayer();
-    setup();
+    loadPlayer()
+    setup()
+    createStoreObjects();
+    setInterval(autoUpdateXP, 1000)
 };
 
 
 function setup() {
-    loadPlayer()
     loadStage();
     loadProgress();
     updateStatsUI();
 }
 
 function autoUpdateXP() {
-    loadPlayer()
+    loadPlayerProfile()
     if (checkTreeStage()) {
         currentPlayer.currentTree.currentXP+=currentPlayer.currentAutoXPRate;
         currentPlayer.currentBarXP += calcAutoBarPercentage()
@@ -54,7 +54,7 @@ function autoUpdateXP() {
 }
 
 function updateXP() {
-    loadPlayer()
+    loadPlayerProfile()
     if (checkTreeStage()) {
         currentPlayer.currentTree.currentXP+=currentPlayer.currentXPRate;
         currentPlayer.currentBarXP += calcManualBarPercentage()
@@ -65,7 +65,7 @@ function updateXP() {
 }
 
 function checkTreeStage() {
-    loadPlayer()
+    loadPlayerProfile()
     let treeToLoad = currentPlayer.currentTree;
     if (treeToLoad.currentXP < treeToLoad.threshXP) {
         return true;
@@ -143,7 +143,7 @@ function loadStage() {
     stageImage.src = treeStages[treeToLoad.currentStage];
 }
 
-function initPlayer() {
+function loadPlayer() {
     statsContainer.hidden = true;
     gameContainer.hidden = true;
     shopContainer.hidden = true;
@@ -159,7 +159,6 @@ function initPlayer() {
         shopContainer.hidden = false;
         let playerToLoad = CryptoJS.AES.decrypt(window.localStorage.getItem("player"),"secret").toString(CryptoJS.enc.Utf8)
         currentPlayer = JSON.parse(playerToLoad);
-        setInterval(autoUpdateXP, 1000)
     }
 }
 
@@ -188,19 +187,18 @@ function createNewPlayer() {
     currentPlayer = newPlayer;
     usernameField.hidden = true;
     beginButton.hidden = true;
+    location.reload(true)
     setup()
-    setInterval(autoUpdateXP, 1000)
-}
-
-function loadPlayer() {
-    let playerToLoad = CryptoJS.AES.decrypt(window.localStorage.getItem("player"), "secret").toString(CryptoJS.enc.Utf8)
-    currentPlayer = JSON.parse(playerToLoad);
 }
 
 //How to hide secret?
 function updateLocalStorage(player) {
     let playerToUpload = CryptoJS.AES.encrypt(JSON.stringify(player),"secret")
     window.localStorage.setItem("player", playerToUpload);
+}
+function loadPlayerProfile() {
+    let playerToLoad = CryptoJS.AES.decrypt(window.localStorage.getItem("player"), "secret").toString(CryptoJS.enc.Utf8)
+    currentPlayer = JSON.parse(playerToLoad);
 }
 
 //Create fucnction to backup data in MongoDB on tab close

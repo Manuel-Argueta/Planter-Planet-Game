@@ -18,7 +18,7 @@ function updateStatsUI() {
     soilDisplay.innerHTML = "Current SOIL: " + currentPlayer.currentSOIL.toFixed(1)
     XPDisplay.innerHTML = "Current XP: " + currentPlayer.currentTree.currentXP.toFixed(1);
     XPRateDisplay.innerHTML = "Current XP Rate: " + currentPlayer.currentXPRate.toFixed(1) + "/ click";
-    AutoXPRateDisplay.innerHTML = "Current Auto XP Rate: " + currentPlayer.currentAutoXPRate + "/ second";
+    AutoXPRateDisplay.innerHTML = "Current Auto XP Rate: " + currentPlayer.currentAutoXPRate.toFixed(1) + "/ second";
 }
 
 function loadPlayer() {

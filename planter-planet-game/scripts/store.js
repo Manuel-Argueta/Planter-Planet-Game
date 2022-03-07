@@ -9,14 +9,14 @@ let boostLabelElements = []
 let botLabelElements = []
 
 //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice)
-boostOptions.push(new Boost("Micronutrient Boost", 1.1, 150, 100, "microBoost"))
-boostOptions.push(new Boost("Mulch Boost", 1.5, 50, 500, "mulchBoost"))
-boostOptions.push(new Boost("Super Boost", 2, 20, 2000, "superBoost"))
+boostOptions.push(new Boost("Micronutrient Boost", 2, 150, 5, "microBoost"))
+boostOptions.push(new Boost("Mulch Boost", 5, 50, 100, "mulchBoost"))
+boostOptions.push(new Boost("Super Boost", 10, 20, 500, "superBoost"))
 
 //Add any other bots here (botName,botAutoIncrease,maxEntities,botPrice)
-botOptions.push(new Bot("Droid Farmer", 1, 100, 10, "droidFarmer"))
-botOptions.push(new Bot("Droid Farmer Clan", 5, 50, 500, "droidClan"))
-botOptions.push(new Bot("Droid Farmer Army", 10, 25, 5000, "droidArmy"))
+botOptions.push(new Bot("Droid Farmer", 1.25, 100, 50, "droidFarmer"))
+botOptions.push(new Bot("Droid Farmer Clan", 1.5, 50, 150, "droidClan"))
+botOptions.push(new Bot("Droid Farmer Army", 1.75, 25, 500, "droidArmy"))
 
 //Add HTML DOM elements creation
 export function createStoreObjects() {
@@ -100,9 +100,16 @@ function manipUpgradeData(currUpgrade) {
     let upgradeName = currUpgrade.type + "Name"
     let upgradeID = currUpgrade.type + "ContainerID"
     let XPRateType =  "current" + currUpgrade.rateType + "Rate"
-    if (currentPlayer.currentSOIL >= currUpgrade[upgradePrice]) {
+    if (currentPlayer.currentSOIL >= currUpgrade[upgradePrice] && currUpgrade[upgradeEntities] <= currUpgrade.maxEntities) {
         currentPlayer.currentSOIL -= currUpgrade[upgradePrice]
-        currentPlayer[XPRateType] += currUpgrade[upgradeAbility];
+        if (currUpgrade.increaseType == "multi") {
+            if (currentPlayer[XPRateType] == 0) {
+                currentPlayer[XPRateType] = 1;
+            }
+            currentPlayer[XPRateType] *= currUpgrade[upgradeAbility];
+        } else if (currUpgrade.increaseType == "add") {
+            currentPlayer[XPRateType] += currUpgrade[upgradeAbility];
+        }
         currUpgrade[upgradeEntities]++;
         currUpgrade[upgradePrice] *= 2;
         currentPlayer.currentUpgrades[currUpgrade[upgradeID]] = currUpgrade
@@ -111,7 +118,7 @@ function manipUpgradeData(currUpgrade) {
     }
 }
 
-//UI not updating - bug
+//UI not updating on load -bug
 function updateStoreUI(descArr,upgradeType) {
     let upgradePrice = upgradeType + "Price"
     let upgradeAbility = upgradeType + "Increase"
@@ -119,7 +126,7 @@ function updateStoreUI(descArr,upgradeType) {
     for (let i = 0; i < descArr.length; i++) {
         if (currentPlayer.currentUpgrades.hasOwnProperty(descArr[i].id)) {
             descArr[i].innerHTML = "Price: " + currentPlayer.currentUpgrades[descArr[i].id][upgradePrice] + "<br/>"
-                + "Boost Amount: " + currentPlayer.currentUpgrades[descArr[i].id][upgradeAbility] + "<br/>" + "Boosts Owned: " +
+                + "Amount Increase: " + currentPlayer.currentUpgrades[descArr[i].id][upgradeAbility] + "<br/>" + "Owned: " +
                 currentPlayer.currentUpgrades[descArr[i].id][upgradeEntities] + "<br/>";
         }
     }
@@ -134,5 +141,4 @@ function updateLocalStorage(player) {
     let playerToUpload = CryptoJS.AES.encrypt(JSON.stringify(player), "secret")
     window.localStorage.setItem("player", playerToUpload);
 }
-
 
