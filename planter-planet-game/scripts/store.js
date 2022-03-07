@@ -5,8 +5,8 @@ import updateStatsUI from './data.js'
 let currentPlayer = {}
 let boostOptions = []
 let botOptions = []
-let boostElements = []
-let botElements = []
+let boostLabelElements = []
+let botLabelElements = []
 
 //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice)
 boostOptions.push(new Boost("Micronutrient Boost", 1.1, 150, 100, "microBoost"))
@@ -20,95 +20,107 @@ botOptions.push(new Bot("Droid Farmer Army", 10, 25, 5000, "droidArmy"))
 
 //Add HTML DOM elements creation
 export function createStoreObjects() {
-        //Renders all boot and bot options based on lines defined above
-        for (let i = 0; i < boostOptions.length; i++) {
-            const parentElement = document.getElementById('boost-sub-container')
-            let tempContainer = document.createElement('div')
-            let tempButton =document.createElement('button')
+    //Renders all boot and bot options based on lines defined above
+    for (let i = 0; i < boostOptions.length; i++) {
+        const parentElement = document.getElementById('boost-sub-container')
+        let tempContainer = document.createElement('div')
+        let tempDescriptionContainer = document.createElement('div')
+        let tempButton = document.createElement('button')
 
-            tempContainer.id = boostOptions[i].boostContainerID 
-            tempContainer.innerHTML = "Price: " + boostOptions[i].boostPrice + "<br/>"
-            + "Boost Amount: " + boostOptions[i].boostMultiplier + "<br/>" + "Boosts Owned: " + 0 + "<br/>";
-            parentElement.appendChild(tempContainer)
-             
-            tempButton.innerHTML = boostOptions[i].boostName
-            tempButton.id = boostOptions[i].boostContainerID + "-button"
-            tempButton.addEventListener('click', function() {addUserBoosts(boostOptions[i])})
-            tempContainer.appendChild(tempButton)
+        tempDescriptionContainer.id = boostOptions[i].boostContainerID
+        tempDescriptionContainer.innerHTML = "Price: " + boostOptions[i].boostPrice + "<br/>"
+            + "Boost Amount: " + boostOptions[i].boostIncrease + "<br/>" + "Boosts Owned: " + 0 + "<br/>";
+        tempContainer.appendChild(tempDescriptionContainer)
 
-            boostElements.push(tempContainer)
-        }
+        tempButton.innerHTML = boostOptions[i].boostName
+        tempButton.id = boostOptions[i].boostContainerID + "-button"
+        tempButton.addEventListener('click', function () { addUserBoosts(boostOptions[i]) })
+        tempContainer.appendChild(tempButton)
+        parentElement.appendChild(tempContainer)
 
-        for (let i = 0; i < botOptions.length; i++) {
-            const parentElement = document.getElementById('bot-sub-container')
-            let tempContainer = document.createElement('div')
-            let tempButton = document.createElement('button')
+        boostLabelElements.push(tempDescriptionContainer)
+    }
 
-            tempContainer.id = botOptions[i].botContainerID
-            tempContainer.innerHTML = "Price: " + botOptions[i].botPrice + "<br/>"
-            + "Bot Auto XP Increase: " + botOptions[i].botAutoIncrease + "<br/>" + "Bots Owned: " + 0 + "<br/>";
-            parentElement.appendChild(tempContainer)
+    for (let i = 0; i < botOptions.length; i++) {
+        const parentElement = document.getElementById('bot-sub-container')
+        let tempContainer = document.createElement('div')
+        let tempDescriptionContainer = document.createElement('div')
+        let tempButton = document.createElement('button')
 
-            tempButton.innerHTML = botOptions[i].botName
-            tempButton.id = botOptions[i].botContainerID + "-button"
-            tempButton.addEventListener('click', function() {addUserBots(botOptions[i])})
-            tempContainer.appendChild(tempButton)
-            botElements.push(tempContainer)
-        }
+        tempDescriptionContainer.id = botOptions[i].botContainerID
+        tempDescriptionContainer.innerHTML = "Price: " + botOptions[i].botPrice + "<br/>"
+            + "Bot Auto XP Increase: " + botOptions[i].botIncrease + "<br/>" + "Bots Owned: " + 0 + "<br/>";
+        tempContainer.appendChild(tempDescriptionContainer)
+
+        
+        tempContainer.id = botOptions[i].botContainerID + "-container"
+        tempButton.innerHTML = botOptions[i].botName
+        tempButton.id = botOptions[i].botContainerID + "-button"
+        tempButton.addEventListener('click', function () { addUserBots(botOptions[i]) })
+        tempContainer.appendChild(tempButton)
+        parentElement.appendChild(tempContainer)
+
+        botLabelElements.push(tempDescriptionContainer)
+    }
 }
 
-//Not being called on first click
 function addUserBoosts(boost) {
     loadPlayer()
     if (currentPlayer.currentUpgrades.hasOwnProperty(boost.boostContainerID)) {
         let currBoost = currentPlayer.currentUpgrades[boost.boostContainerID]
-        if (currentPlayer.currentSOIL >= currBoost.boostPrice) {
-        currentPlayer.currentSOIL -= currBoost.boostPrice;
-        currentPlayer.currentXPRate *= currBoost.boostMultiplier;
-        currBoost.boostEntities++;
-        currBoost.boostPrice *= 2;
-        currentPlayer.currentUpgrades[boost.boostContainerID] = currBoost
-        console.log(currentPlayer.currentUpgrades)
-        } else {
-            console.log("cant afford " + currBoost.boostName)
-        }
+        manipUpgradeData(currBoost)
     } else {
         currentPlayer.currentUpgrades[boost.boostContainerID] = boost
+        let currBoost = currentPlayer.currentUpgrades[boost.boostContainerID]
+        manipUpgradeData(currBoost)
     }
     updateLocalStorage(currentPlayer)
+    updateStoreUI(boostLabelElements,"boost")
     updateStatsUI()
-    updateStoreUI()
 }
 
 function addUserBots(bot) {
     loadPlayer()
     if (currentPlayer.currentUpgrades.hasOwnProperty(bot.botContainerID)) {
         let currBot = currentPlayer.currentUpgrades[bot.botContainerID]
-        if (currentPlayer.currentSOIL >= currBot.botPrice) {
-        currentPlayer.currentSOIL -= currBot.botPrice;
-        currentPlayer.currentAutoXPRate += currBot.botAutoIncrease;
-        currBot.botEntities++;
-        currBot.botPrice *= 2;
-        currentPlayer.currentUpgrades[bot.botContainerID] = currBot
-        console.log(currentPlayer.currentUpgrades)
-        } else {
-            console.log("cant afford " + currBot.botName)
-        }
+        manipUpgradeData(currBot)
     } else {
         currentPlayer.currentUpgrades[bot.botContainerID] = bot
+        let currBot = currentPlayer.currentUpgrades[bot.botContainerID]
+        manipUpgradeData(currBot,)
     }
     updateLocalStorage(currentPlayer)
-    updateStatsUI()
+    updateStoreUI(botLabelElements,"bot")
+}
+
+function manipUpgradeData(currUpgrade) {
+    let upgradePrice = currUpgrade.type + "Price"
+    let upgradeAbility = currUpgrade.type + "Increase"
+    let upgradeEntities = currUpgrade.type + "Entities"
+    let upgradeName = currUpgrade.type + "Name"
+    let upgradeID = currUpgrade.type + "ContainerID"
+    let XPRateType =  "current" + currUpgrade.rateType + "Rate"
+    if (currentPlayer.currentSOIL >= currUpgrade[upgradePrice]) {
+        currentPlayer.currentSOIL -= currUpgrade[upgradePrice]
+        currentPlayer[XPRateType] += currUpgrade[upgradeAbility];
+        currUpgrade[upgradeEntities]++;
+        currUpgrade[upgradePrice] *= 2;
+        currentPlayer.currentUpgrades[currUpgrade[upgradeID]] = currUpgrade
+    } else {
+        console.log("Cant afford " + currUpgrade[upgradeName])
+    }
 }
 
 //UI not updating - bug
-function updateStoreUI() {
-    for (let i = 0; i > boostElements.length; i++) {
-        if (currentPlayer.currentUpgrades.hasOwnProperty(boostElements[i].id)) {
-            console.log("updated")
-        boostElements[i].innerHTML = "Price: " + currentPlayer.currentUpgrades[boostElements[i].id].boostPrice  + "<br/>"
-        + "Boost Amount: " + currentPlayer.currentUpgrades[boostElements[i].id].boostMultiplier + "<br/>" + "Boosts Owned: " + 
-        currentPlayer.currentUpgrades[boostElements[i].id].boostInstances + "<br/>";
+function updateStoreUI(descArr,upgradeType) {
+    let upgradePrice = upgradeType + "Price"
+    let upgradeAbility = upgradeType + "Increase"
+    let upgradeEntities = upgradeType + "Entities"
+    for (let i = 0; i < descArr.length; i++) {
+        if (currentPlayer.currentUpgrades.hasOwnProperty(descArr[i].id)) {
+            descArr[i].innerHTML = "Price: " + currentPlayer.currentUpgrades[descArr[i].id][upgradePrice] + "<br/>"
+                + "Boost Amount: " + currentPlayer.currentUpgrades[descArr[i].id][upgradeAbility] + "<br/>" + "Boosts Owned: " +
+                currentPlayer.currentUpgrades[descArr[i].id][upgradeEntities] + "<br/>";
         }
     }
 }
