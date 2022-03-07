@@ -27,6 +27,8 @@ const playerRanks = ["Dogwater Farmer", "Farmer", "Bio Hero", "Spawner","Giga Fa
 
 // Sets up environment on page load
 createStoreObjects()
+
+//Not loading in at first 
 window.onload = function() {
     initPlayer();
     setup();
@@ -181,7 +183,7 @@ function createNewPlayer() {
         currentAutoXPRate: 0,
         currentBarXP: 0
     };
-    
+
     updateLocalStorage(newPlayer);
     currentPlayer = newPlayer;
     usernameField.hidden = true;

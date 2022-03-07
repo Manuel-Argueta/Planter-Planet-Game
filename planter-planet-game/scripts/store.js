@@ -57,6 +57,7 @@ export function createStoreObjects() {
         }
 }
 
+//Not being called on first click
 function addUserBoosts(boost) {
     loadPlayer()
     if (currentPlayer.currentUpgrades.hasOwnProperty(boost.boostContainerID)) {
@@ -100,6 +101,7 @@ function addUserBots(bot) {
     updateStatsUI()
 }
 
+//UI not updating - bug
 function updateStoreUI() {
     for (let i = 0; i > boostElements.length; i++) {
         if (currentPlayer.currentUpgrades.hasOwnProperty(boostElements[i].id)) {
