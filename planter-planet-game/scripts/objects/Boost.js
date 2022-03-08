@@ -9,6 +9,6 @@ export default class Boost {
       this.boostContainerID = boostContainerID;
       this.type = "boost";
       this.rateType = 'XP'
-      this.increaseType = "add"
+      this.increaseType = "multi"
     }
 }

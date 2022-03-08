@@ -1,6 +1,7 @@
 #progress-bar-container {
     width: 100%;
     background-color: grey;
+    overflow: hidden;
 }
 
 #stage-progress {

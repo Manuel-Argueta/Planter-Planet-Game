@@ -29,7 +29,7 @@ const playerRanks = ["Dogwater Farmer", "Farmer", "Bio Hero", "Spawner","Giga Fa
 
 //Not loading in at first 
 window.onload = function() {
-    loadPlayer()
+    initPlayer()
     setup()
     createStoreObjects();
     setInterval(autoUpdateXP, 1000)
@@ -73,7 +73,7 @@ function checkTreeStage() {
         treeToLoad.currentXP = 0;
         currentPlayer.currentBarXP = 0
         //testing difficulty increase
-        treeToLoad.threshXP *= 100;
+        treeToLoad.threshXP *= 1000;
         progressBar.style.width = currentPlayer.currentBarXP  + "%";
         treeToLoad.currentStage++;
         treeToLoad.currentStageName = treeToLoad.treeStages[treeToLoad.currentStage];
@@ -143,7 +143,7 @@ function loadStage() {
     stageImage.src = treeStages[treeToLoad.currentStage];
 }
 
-function loadPlayer() {
+function initPlayer() {
     statsContainer.hidden = true;
     gameContainer.hidden = true;
     shopContainer.hidden = true;
