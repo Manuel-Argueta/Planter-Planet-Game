@@ -1,10 +1,10 @@
 #progress-bar-container {
-    width: 100%;
+    width: 50%;
     background-color: grey;
     overflow: hidden;
 }
 
-#stage-progress {
+#stageProgressBar {
     width: 0%;
     height: 30px;
     background-color: green;
@@ -15,3 +15,17 @@
     height:250px;
 }
 
+#main-nav-container {
+    text-align: center;
+}
+#XPDisplay {
+    float: left;
+}
+
+#soilDisplay {
+    display: inline-block;
+}
+
+#usernameDisplay {
+    float: right; 
+}

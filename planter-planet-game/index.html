@@ -12,54 +12,50 @@
 </head>
 
 <body>
-  <div>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <input id="usernameField" placeholder="Enter Your Username"></input>
-          <button id="beginGame">Save The Planet!</button>
+  <div class="container">
+    <div id = "main-nav-container">
+      <span id="XPDisplay"></span>
+      <span id="soilDisplay"></span>
+      <span id="usernameDisplay"></span>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <div id="main-game-container">
+          <div id="progress-bar-container">
+            <div id = "stageProgressBar"></div>
+          </div>
+          <span id = "stagePercentage"></span>
+          <div>
+            <img id="stageImage" />
+          </div>
+          <button id="addXPButton">Grow Tree</button>
+        </div>
+
+      </div>
+      <div class="col-4">
+        <div class="row">
           <div id="main-stats-container">
-            <h3>Planter Planet Stats</h3>
-            <p id="username"></p>
-            <p id="rank"></p>
-            <img id="playerAvatar" />
-            <p id="treesGrown"></p>
+          <h3>Game Stats</h3>
+          <p id="rankDisplay"></p>
+          <img id="playerAvatar" />
+          <p id="treesGrown"></p>
           </div>
         </div>
-        <div class="col">
-          <div id="main-game-container">
-            <div id="progress-bar-container">
-              <div id="stage-progress"></div>
-            </div>
-            <div>
-              <img id="stageImage" />
-            </div>
-            <p id="XPDisplay"></p>
-            <p id="XPRateDisplay"></p>
-            <p id="AutoXPRateDisplay"></p>
-            <button id="addXPButton">Grow Tree</button>
-          </div>
-        </div>
-        <div class="col">
+        <div class="row">
           <div id="main-shop-container">
-            <p id="soil-count"></p>
-            <p id="boostTtitle">Purchase Boosts</p>
+            <p id="upgradeTitle">Purchase Upgrades</p>
             <div class="row">
-              <div class = "col">
-              <div id="boost-sub-container">
+              <div class="col">
+                <div id="upgradeShop">
+                </div>
               </div>
-              </div>
-              <div class = "col">
-              <p id="botTtitle">Purchase Bots</p>
-              <div id="bot-sub-container">
-              </div>
-            </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
   <script type="module" src="./scripts/main.js"></script>
   <script type="module" src="./scripts/store.js"></script>
