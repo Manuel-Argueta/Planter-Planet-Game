@@ -10,18 +10,38 @@ export function defineStoreOptions() {
   //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice, boostID)
   boostOptions.push(new Boost("3 x Multi", 3, 5, 50000, "ThreeMulti"));
 
+  boostOptions.push(new Boost("3 x Multi", 3, 5, 50000, "ThreeMulti"));
+
+  boostOptions.push(new Boost("3 x Multi", 3, 5, 50000, "ThreeMulti"));
+
   //Add any other bots here constructor(botName,botIncrease, maxEntities, botPrice, botID,"botIcon")
   botOptions.push(
-    new Bot("Droid", 10, 5000, 5, "droid", "./assets/Droid.png",5)
+    new Bot("Droid", 10, 5000, 5, "droid", "./assets/Droid.png", 5)
   );
   botOptions.push(
-    new Bot("Super Droid", 50, 2500, 100, "superDroid", "./assets/SuperDroid.png",10)
+    new Bot(
+      "Super Droid",
+      50,
+      2500,
+      100,
+      "superDroid",
+      "./assets/SuperDroid.png",
+      10
+    )
   );
   botOptions.push(
-    new Bot("Ultra Droid", 100, 1000, 500, "ultraDroid", "./assets/UltraDroid.png",15)
+    new Bot(
+      "Ultra Droid",
+      100,
+      1000,
+      500,
+      "ultraDroid",
+      "./assets/UltraDroid.png",
+      15
+    )
   );
 
-  return botOptions
+  return botOptions;
 }
 
 //Add HTML DOM elements creation
@@ -34,7 +54,7 @@ export function initStoreObjects(botOptions) {
     itemContainer.id = botOptions[i].botID + "Item";
 
     let itemIcon = document.createElement("img");
-    itemIcon.id = botOptions[i].botID + "Icon"
+    itemIcon.id = botOptions[i].botID + "Icon";
     itemIcon.src = botOptions[i].botIcon;
 
     let itemCounter = document.createElement("p");
@@ -46,8 +66,11 @@ export function initStoreObjects(botOptions) {
 
     let itemButton = document.createElement("button");
     itemButton.id = botOptions[i].botID + "Button";
-    itemButton.innerHTML = botOptions[i].botName + " Price: " + botOptions[i].botPrice;
-    itemButton.addEventListener('click', function () { addBots(botOptions[i]) })
+    itemButton.innerHTML =
+      botOptions[i].botName + " Price: " + botOptions[i].botPrice;
+    itemButton.addEventListener("click", function () {
+      addBots(botOptions[i]);
+    });
 
     let progressBar = document.createElement("div");
     progressBar.id = botOptions[i].botID + "ProgressBar";
@@ -56,6 +79,13 @@ export function initStoreObjects(botOptions) {
     progressBarText.id = botOptions[i].botID + "ProgressBarText";
     progressBarText.innerHTML = botOptions[i].botRate + " / Second";
 
+    let boostButton = document.createElement("button");
+    boostButton.id = botOptions[i].botID + boostOptions[i].boostID + "Button";
+    boostButton.innerHTML =
+      boostOptions[i].boostName + " Price: " + boostOptions[i].boostPrice;
+    boostButton.addEventListener("click", function () {
+      addBoost(botOptions[i], boostOptions[i]);
+    });
 
     itemButton.className = "botButton";
     itemIcon.className = "botIcon";
@@ -64,111 +94,137 @@ export function initStoreObjects(botOptions) {
     progressBar.className = "botProgressBar";
 
     progressBarShell.appendChild(progressBar);
-    progressBar.appendChild(progressBarText)
+    progressBar.appendChild(progressBarText);
     itemContainer.appendChild(progressBarShell);
     itemContainer.appendChild(itemIcon);
     itemContainer.appendChild(itemCounter);
     itemContainer.appendChild(itemButton);
-    for (let j = 0; j < boostOptions.length; j++) {
-      let boostButton = document.createElement("button");
-      boostButton.id = botOptions[i].botID + boostOptions[j].boostID + "Button";
-      boostButton.innerHTML = boostOptions[j].boostName + " Price: " + boostOptions[j].boostPrice;
-      boostButton.addEventListener('click', function() { addBoost(botOptions[i],boostOptions[j])})
-      itemContainer.appendChild(boostButton);
-    }
+    itemContainer.appendChild(boostButton);
     parentElement.appendChild(itemContainer);
   }
 }
 
-
 function addBots(currBot) {
-  loadPlayer()
-  let currBotID = currBot.botID
-  if (currentPlayer.currentUpgrades.hasOwnProperty(currBotID) && currentPlayer.currentSOIL >= currentPlayer.currentUpgrades[currBotID].botPrice) {
-    manipBotData(currBotID)
-  } else if (!currentPlayer.currentUpgrades.hasOwnProperty(currBotID) && currentPlayer.currentSOIL >= currBot.botPrice) {
-    currentPlayer.currentUpgrades[currBotID] = currBot
-    manipBotData(currBotID)
+  loadPlayer();
+  let currBotID = currBot.botID;
+  if (
+    currentPlayer.currentUpgrades.hasOwnProperty(currBotID) &&
+    currentPlayer.currentSOIL >=
+      currentPlayer.currentUpgrades[currBotID].botPrice
+  ) {
+    manipBotData(currBotID);
+  } else if (
+    !currentPlayer.currentUpgrades.hasOwnProperty(currBotID) &&
+    currentPlayer.currentSOIL >= currBot.botPrice
+  ) {
+    currentPlayer.currentUpgrades[currBotID] = currBot;
+    manipBotData(currBotID);
   } else {
-    console.log("Cant afford " + currBotID)
+    console.log("Cant afford " + currBotID);
   }
 }
 
 function manipBotData(currBotID) {
-    currentPlayer.currentUpgrades[currBotID].botEntities++;
-    currentPlayer.currentSOIL -= currentPlayer.currentUpgrades[currBotID].botPrice
-    currentPlayer.currentUpgrades[currBotID].botPrice *= currentPlayer.currentUpgrades[currBotID].botPriceIncrease;
-    currentPlayer.currentUpgrades[currBotID].botRate += currentPlayer.currentUpgrades[currBotID].botIncrease;
-    getNewAutoXPRate(currentPlayer.currentUpgrades)
-    updateLocalStorage(currentPlayer)
-    updateStoreUI()
-    updateStatsUI()
+  currentPlayer.currentUpgrades[currBotID].botEntities++;
+  currentPlayer.currentSOIL -=
+    currentPlayer.currentUpgrades[currBotID].botPrice;
+  currentPlayer.currentUpgrades[currBotID].botPrice *=
+    currentPlayer.currentUpgrades[currBotID].botPriceIncrease;
+  currentPlayer.currentUpgrades[currBotID].botRate +=
+    currentPlayer.currentUpgrades[currBotID].botIncrease;
+  getNewAutoXPRate(currentPlayer.currentUpgrades);
+  updateLocalStorage(currentPlayer);
+  updateStoreUI();
+  updateStatsUI();
 }
 
 //botToUpgrade , pass in the stored bot ID, currBoost, pass in the actual boost object
 function addBoost(botToUpgrade, currBoost) {
-  loadPlayer()
-  let currBoostID = currBoost.boostID
-  let currBotID = botToUpgrade.botID
-  if (currentPlayer.currentUpgrades[currBotID].botBoosts.hasOwnProperty(currBoostID) && currentPlayer.currentSOIL >= currBoost.boostPrice) {
-    manipBoostData(currBotID,currBoostID)
-  } else if (!currentPlayer.currentUpgrades[currBotID].botBoosts.hasOwnProperty(currBoostID) && currentPlayer.currentSOIL >= currBoost.boostPrice) {
-    currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID] = currBoost
-    manipBoostData(currBotID,currBoostID)
+  loadPlayer();
+  let currBoostID = currBoost.boostID;
+  let currBotID = botToUpgrade.botID;
+  if (
+    currentPlayer.currentUpgrades[currBotID].botBoosts.hasOwnProperty(
+      currBoostID
+    ) &&
+    currentPlayer.currentSOIL >=
+      currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice
+  ) {
+    manipBoostData(currBotID, currBoostID);
+  } else if (
+    currentPlayer.currentUpgrades[currBotID].botBoosts.hasOwnProperty(
+      currBoostID
+    ) == false &&
+    currentPlayer.currentSOIL >= currBoost.boostPrice
+  ) {
+    console.log("created new boost");
+    currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID] = currBoost;
+    manipBoostData(currBotID, currBoostID);
   } else {
-    console.log("Cant afford " + currBoostID)
+    console.log("Cant afford " + currBoostID);
   }
 }
 
-function manipBoostData(currBotID,currBoostID) {
-  currentPlayer.currentUpgrades[currBotID].botRate *= currBoost.boostMulti
-    currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostEntities++;
-    currentPlayer.currentSOIL -= currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice
-    currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice *= 100;
-    getNewAutoXPRate(currentPlayer.currentUpgrades)
-    updateLocalStorage(currentPlayer)
-    updateStoreUI()
-    updateStatsUI()
+function manipBoostData(currBotID, currBoostID) {
+  currentPlayer.currentUpgrades[currBotID].botRate *=
+    currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostMulti;
+  currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID]
+    .boostEntities++;
+  currentPlayer.currentSOIL -=
+    currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice;
+  currentPlayer.currentUpgrades[currBotID].botBoosts[
+    currBoostID
+  ].boostPrice *= 100;
+  getNewAutoXPRate(currentPlayer.currentUpgrades);
+  updateLocalStorage(currentPlayer);
+  updateStoreUI();
+  updateStatsUI();
 }
 
 function getNewAutoXPRate(currentUpgrades) {
-  let key = ""
-  let newAutoXPRate = 0
+  let key = "";
+  let newAutoXPRate = 0;
   for (key in currentUpgrades) {
-    newAutoXPRate += currentUpgrades[key].botRate
+    newAutoXPRate += currentUpgrades[key].botRate;
   }
-  currentPlayer.currentAutoXPRate = newAutoXPRate
-  updateLocalStorage(currentPlayer)
+  currentPlayer.currentAutoXPRate = newAutoXPRate;
+  updateLocalStorage(currentPlayer);
 }
 
 //not working index errors
 export function updateStoreUI() {
-  loadPlayer()
-  let currentUpgrades = currentPlayer.currentUpgrades
+  loadPlayer();
+  let currentUpgrades = currentPlayer.currentUpgrades;
   let key;
   let altKey;
   for (key in currentUpgrades) {
-    startAnimations([currentUpgrades[key].botID + "ProgressBar"])
-    document.getElementById([currentUpgrades[key].botID + "ProgressBarText"]).innerHTML =
-      currentUpgrades[key].botRate + " / Second";
-    document.getElementById([currentUpgrades[key].botID + "CounterDisplay"]).innerHTML =
-      currentUpgrades[currentUpgrades[key].botID].botEntities;
+    startAnimations([currentUpgrades[key].botID + "ProgressBar"]);
+    document.getElementById([
+      currentUpgrades[key].botID + "ProgressBarText",
+    ]).innerHTML = currentUpgrades[key].botRate + " / Second";
+    document.getElementById([
+      currentUpgrades[key].botID + "CounterDisplay",
+    ]).innerHTML = currentUpgrades[currentUpgrades[key].botID].botEntities;
 
     document.getElementById([currentUpgrades[key].botID + "Button"]).innerHTML =
-      currentUpgrades[currentUpgrades[key].botID].botName + " Price: " +
+      currentUpgrades[currentUpgrades[key].botID].botName +
+      " Price: " +
       currentUpgrades[currentUpgrades[key].botID].botPrice;
 
-      let currentBoosts = currentUpgrades[key].botBoosts
-      for (altKey in currentBoosts) {
-        document.getElementById([currentUpgrades[key].botID + currentBoosts[altKey].boostID + "Button"]).innerHTML =
-        currentBoosts[altKey].boostName + " Price: " +
+    let currentBoosts = currentUpgrades[key].botBoosts;
+    for (altKey in currentBoosts) {
+      document.getElementById([
+        currentUpgrades[key].botID + currentBoosts[altKey].boostID + "Button",
+      ]).innerHTML =
+        currentBoosts[altKey].boostName +
+        " Price: " +
         currentBoosts[altKey].boostPrice;
-      }
+    }
   }
 }
 
 function startAnimations(progressBar) {
-  let bar = document.getElementById(progressBar);  
+  let bar = document.getElementById(progressBar);
   let barWidth = bar.style.width;
   setInterval(renderAnimation, 10);
 
@@ -176,16 +232,11 @@ function startAnimations(progressBar) {
     if (barWidth >= 100) {
       barWidth = 0;
     } else {
-      barWidth++; 
-      bar.style.width = barWidth + '%'; 
+      barWidth++;
+      bar.style.width = barWidth + "%";
     }
   }
-
 }
-
-
-
-
 
 function loadPlayer() {
   let playerToLoad = CryptoJS.AES.decrypt(
