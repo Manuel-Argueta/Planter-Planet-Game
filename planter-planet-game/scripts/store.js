@@ -8,17 +8,17 @@ let boostOptions = [];
 let botOptions = [];
 export function defineStoreOptions() {
   //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice, boostID)
-  boostOptions.push(new Boost("3 x Multi", 3, 5, 50000, "threeMulti"));
+  boostOptions.push(new Boost("3 x Multi", 3, 5, 50000, "ThreeMulti"));
 
   //Add any other bots here constructor(botName,botIncrease, maxEntities, botPrice, botID,"botIcon")
   botOptions.push(
-    new Bot("Droid", 10, 5000, 5, "droid", "./assets/Droid.png")
+    new Bot("Droid", 10, 5000, 5, "droid", "./assets/Droid.png",5)
   );
   botOptions.push(
-    new Bot("Super Droid", 50, 2500, 100, "superDroid", "./assets/Droid.png")
+    new Bot("Super Droid", 50, 2500, 100, "superDroid", "./assets/SuperDroid.png",10)
   );
   botOptions.push(
-    new Bot("Ultra Droid", 100, 1000, 500, "ultraDroid", "./assets/Droid.png")
+    new Bot("Ultra Droid", 100, 1000, 500, "ultraDroid", "./assets/UltraDroid.png",15)
   );
 
   return botOptions
@@ -34,11 +34,13 @@ export function initStoreObjects(botOptions) {
     itemContainer.id = botOptions[i].botID + "Item";
 
     let itemIcon = document.createElement("img");
+    itemIcon.id = botOptions[i].botID + "Icon"
     itemIcon.src = botOptions[i].botIcon;
 
     let itemCounter = document.createElement("p");
     itemCounter.id = botOptions[i].botID + "CounterDisplay";
     itemCounter.innerHTML = botOptions[i].botEntities;
+
     let progressBarShell = document.createElement("div");
     progressBarShell.id = botOptions[i].botID + "ProgressBarContainer";
 
@@ -49,7 +51,12 @@ export function initStoreObjects(botOptions) {
 
     let progressBar = document.createElement("div");
     progressBar.id = botOptions[i].botID + "ProgressBar";
-    progressBar.innerHTML = botOptions[i].botRate + " / Second";
+
+    let progressBarText = document.createElement("div");
+    progressBarText.id = botOptions[i].botID + "ProgressBarText";
+    progressBarText.innerHTML = botOptions[i].botRate + " / Second";
+
+
     itemButton.className = "botButton";
     itemIcon.className = "botIcon";
     itemCounter.className = "botCounter";
@@ -57,6 +64,7 @@ export function initStoreObjects(botOptions) {
     progressBar.className = "botProgressBar";
 
     progressBarShell.appendChild(progressBar);
+    progressBar.appendChild(progressBarText)
     itemContainer.appendChild(progressBarShell);
     itemContainer.appendChild(itemIcon);
     itemContainer.appendChild(itemCounter);
@@ -72,33 +80,29 @@ export function initStoreObjects(botOptions) {
   }
 }
 
-//refactor and create function for the repeated code
+
 function addBots(currBot) {
   loadPlayer()
   let currBotID = currBot.botID
   if (currentPlayer.currentUpgrades.hasOwnProperty(currBotID) && currentPlayer.currentSOIL >= currentPlayer.currentUpgrades[currBotID].botPrice) {
-    currentPlayer.currentUpgrades[currBotID].botEntities++;
-    currentPlayer.currentSOIL -= currentPlayer.currentUpgrades[currBotID].botPrice
-    //change increase factor for better in game econ
-    currentPlayer.currentUpgrades[currBotID].botPrice *= 5;
-    currentPlayer.currentUpgrades[currBotID].botRate += currentPlayer.currentUpgrades[currBotID].botIncrease;
-    getNewAutoXPRate(currentPlayer.currentUpgrades)
-    updateLocalStorage(currentPlayer)
-    updateStoreUI()
-    updateStatsUI()
+    manipBotData(currBotID)
   } else if (!currentPlayer.currentUpgrades.hasOwnProperty(currBotID) && currentPlayer.currentSOIL >= currBot.botPrice) {
     currentPlayer.currentUpgrades[currBotID] = currBot
+    manipBotData(currBotID)
+  } else {
+    console.log("Cant afford " + currBotID)
+  }
+}
+
+function manipBotData(currBotID) {
     currentPlayer.currentUpgrades[currBotID].botEntities++;
     currentPlayer.currentSOIL -= currentPlayer.currentUpgrades[currBotID].botPrice
-    currentPlayer.currentUpgrades[currBotID].botPrice *= 5;
+    currentPlayer.currentUpgrades[currBotID].botPrice *= currentPlayer.currentUpgrades[currBotID].botPriceIncrease;
     currentPlayer.currentUpgrades[currBotID].botRate += currentPlayer.currentUpgrades[currBotID].botIncrease;
     getNewAutoXPRate(currentPlayer.currentUpgrades)
     updateLocalStorage(currentPlayer)
     updateStoreUI()
     updateStatsUI()
-  } else {
-    console.log("cant afford")
-  }
 }
 
 //botToUpgrade , pass in the stored bot ID, currBoost, pass in the actual boost object
@@ -107,16 +111,17 @@ function addBoost(botToUpgrade, currBoost) {
   let currBoostID = currBoost.boostID
   let currBotID = botToUpgrade.botID
   if (currentPlayer.currentUpgrades[currBotID].botBoosts.hasOwnProperty(currBoostID) && currentPlayer.currentSOIL >= currBoost.boostPrice) {
-    currentPlayer.currentUpgrades[botToUpgrade.botID].botRate *= currBoost.boostMulti
-    currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostEntities++;
-    currentPlayer.currentSOIL -= currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice
-    getNewAutoXPRate(currentPlayer.currentUpgrades)
-    updateLocalStorage(currentPlayer)
-    updateStoreUI()
-    updateStatsUI() 
+    manipBoostData(currBotID,currBoostID)
   } else if (!currentPlayer.currentUpgrades[currBotID].botBoosts.hasOwnProperty(currBoostID) && currentPlayer.currentSOIL >= currBoost.boostPrice) {
     currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID] = currBoost
-    currentPlayer.currentUpgrades[botToUpgrade.botID].botRate *= currBoost.boostMulti
+    manipBoostData(currBotID,currBoostID)
+  } else {
+    console.log("Cant afford " + currBoostID)
+  }
+}
+
+function manipBoostData(currBotID,currBoostID) {
+  currentPlayer.currentUpgrades[currBotID].botRate *= currBoost.boostMulti
     currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostEntities++;
     currentPlayer.currentSOIL -= currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice
     currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice *= 100;
@@ -124,9 +129,6 @@ function addBoost(botToUpgrade, currBoost) {
     updateLocalStorage(currentPlayer)
     updateStoreUI()
     updateStatsUI()
-  } else {
-    console.log("cant afford")
-  }
 }
 
 function getNewAutoXPRate(currentUpgrades) {
@@ -143,16 +145,19 @@ function getNewAutoXPRate(currentUpgrades) {
 export function updateStoreUI() {
   loadPlayer()
   let currentUpgrades = currentPlayer.currentUpgrades
-  let key = ""
-  let altKey = ""
+  let key;
+  let altKey;
   for (key in currentUpgrades) {
-    document.getElementById([currentUpgrades[key].botID + "ProgressBar"]).innerHTML =
+    startAnimations([currentUpgrades[key].botID + "ProgressBar"])
+    document.getElementById([currentUpgrades[key].botID + "ProgressBarText"]).innerHTML =
       currentUpgrades[key].botRate + " / Second";
     document.getElementById([currentUpgrades[key].botID + "CounterDisplay"]).innerHTML =
       currentUpgrades[currentUpgrades[key].botID].botEntities;
+
     document.getElementById([currentUpgrades[key].botID + "Button"]).innerHTML =
       currentUpgrades[currentUpgrades[key].botID].botName + " Price: " +
       currentUpgrades[currentUpgrades[key].botID].botPrice;
+
       let currentBoosts = currentUpgrades[key].botBoosts
       for (altKey in currentBoosts) {
         document.getElementById([currentUpgrades[key].botID + currentBoosts[altKey].boostID + "Button"]).innerHTML =
@@ -161,6 +166,25 @@ export function updateStoreUI() {
       }
   }
 }
+
+function startAnimations(progressBar) {
+  let bar = document.getElementById(progressBar);  
+  let barWidth = bar.style.width;
+  setInterval(renderAnimation, 10);
+
+  function renderAnimation() {
+    if (barWidth >= 100) {
+      barWidth = 0;
+    } else {
+      barWidth++; 
+      bar.style.width = barWidth + '%'; 
+    }
+  }
+
+}
+
+
+
 
 
 function loadPlayer() {

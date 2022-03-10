@@ -1,6 +1,6 @@
 // Defines the class for Bot object
 export default class Bot {
-    constructor(botName,botIncrease,maxEntities,botPrice,botID,botIcon) {
+    constructor(botName,botIncrease,maxEntities,botPrice,botID,botIcon,priceIncrease) {
       this.botName = botName;
       this.botIcon = botIcon;
       this.botIncrease = botIncrease;
@@ -10,5 +10,6 @@ export default class Bot {
       this.botPrice = botPrice;
       this.botID = botID;
       this.botBoosts = {}
+      this.botPriceIncrease = priceIncrease
     }
 }

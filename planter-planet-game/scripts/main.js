@@ -28,7 +28,7 @@ window.onload = function() {
     setup()
     let botOptions = defineStoreOptions()
     initStoreObjects(botOptions);
-    updateStoreUI(botOptions)
+    updateStoreUI()
     setInterval(autoUpdateXP, 1000)
 };
 

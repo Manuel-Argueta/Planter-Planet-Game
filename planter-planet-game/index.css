@@ -1,4 +1,4 @@
-#progress-bar-container {
+#progress-bar-container{
     width: 50%;
     background-color: grey;
     overflow: hidden;
@@ -10,6 +10,24 @@
     background-color: green;
 }
 
+.botProgressBarContainer {
+    width: 100%;
+    background-color: grey;
+    overflow: hidden;
+}
+
+.botProgressBar {
+    width: 0%;
+    height: 30px;
+    background-color: green;
+}
+
+.botItem {
+    width:100px;
+}
+.botIcon {
+    width:100px;
+}
 #stageImage {
     width:250px;
     height:250px;
