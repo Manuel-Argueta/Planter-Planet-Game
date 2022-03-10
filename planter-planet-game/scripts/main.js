@@ -177,8 +177,3 @@ function loadPlayerProfile() {
 
 }
 
-//Create fucnction to backup data in MongoDB on tab close
-
-// function backupUserProgress() {
-
-// }

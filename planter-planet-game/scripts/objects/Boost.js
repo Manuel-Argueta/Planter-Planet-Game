@@ -7,6 +7,5 @@ export default class Boost {
       this.maxEntities = maxEntities;
       this.boostPrice= boostPrice;
       this.boostID = boostID;
-      this.type = "boost";
     }
 }

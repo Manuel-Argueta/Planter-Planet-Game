@@ -9,6 +9,6 @@ export default class Bot {
       this.maxEntities = maxEntities;
       this.botPrice = botPrice;
       this.botID = botID;
-      this.type = "bot"
+      this.botBoosts = {}
     }
 }

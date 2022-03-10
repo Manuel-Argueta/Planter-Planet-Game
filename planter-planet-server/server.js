@@ -7,8 +7,6 @@ const superagent = require('superagent');
 const port = process.env.PORT || 8080;
 const mongoUri = process.env.URI;
 
-const Player = require('./Models/Player');
-
 const app = express();
 
 app.use(cors());
@@ -40,24 +38,6 @@ app.get('/get-key', (req,res)=> {
         status: 200,
         key: process.env.CRYPT_KEY
         });
-});
-
-
-app.post('/create-player', (req,res) => {
-    const incomingData = req.body;
-    const newPlayer = new Player(incomingData);
-    newPlayer.save((err,doc) => {
-    if (err) {
-        res.status(500).send({
-            err: err,
-            message: "Server Error Occured"
-        });
-    } 
-        res.status(200).send({
-        message: 'Player Created!',
-        document: doc
-        });
-    });
 });
 
 
