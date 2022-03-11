@@ -1,11 +1,11 @@
 // Defines the class for Boost object
 export default class Boost {
-    constructor(boostName,boostMulti,maxEntities, boostPrice,boostID) {
+    constructor(boostName,boostMulti, boostPrice,boostID,priceIncrease) {
       this.boostName = boostName;
       this.boostMulti = boostMulti;
       this.boostEntities = 0;
-      this.maxEntities = maxEntities;
       this.boostPrice= boostPrice;
       this.boostID = boostID;
+      this.boostPriceIncrease = priceIncrease
     }
 }
