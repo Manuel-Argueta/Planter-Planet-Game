@@ -13,10 +13,20 @@ export function updateStatsUI() {
     avatarDisplay.src = currentPlayer.avatar;
     rankDisplay.innerHTML = "Rank: " + currentPlayer.playerRank + " " + currentPlayer.rankLevel;
     treesGrownDisplay.innerHTML = "Trees Grown: " + currentPlayer.treesGrown
-    soilDisplay.innerHTML = "SOIL: " + currentPlayer.currentSOIL.toFixed(1)
-    XPDisplay.innerHTML = "Total XP: " + currentPlayer.totalXP.toFixed(1);
+    soilDisplay.innerHTML = "SOIL: " + returnLabel(currentPlayer.currentSOIL)
+    XPDisplay.innerHTML = "Total XP: " + returnLabel(currentPlayer.totalXP)
 }
 
+export function returnLabel(number) {
+    let possLabels = ["Thousand", "Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion","Nonillion"]
+    let treshVals = [10e2,10e5,10e8,10e11,10e14,10e17,10e20,10e23,10e26,10e29]
+    for (let i = 0; i < possLabels.length;i++) {
+        if (number >= treshVals[i] && number < treshVals[i+1]) {
+            return (number/treshVals[i]).toFixed(1) + " " + possLabels[i]
+        }
+    } 
+    return number.toFixed(1)
+}
 function loadPlayer() {
     let playerToLoad = CryptoJS.AES.decrypt(window.localStorage.getItem("player"),"secret").toString(CryptoJS.enc.Utf8)
     currentPlayer = JSON.parse(playerToLoad);

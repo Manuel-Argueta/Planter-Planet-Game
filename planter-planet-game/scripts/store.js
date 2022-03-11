@@ -1,6 +1,7 @@
 import Bot from "./objects/Bot.js";
 import Boost from "./objects/Boost.js";
 import { updateStatsUI } from "./data.js";
+import { returnLabel } from "./data.js"
 
 let currentPlayer = {};
 
@@ -8,11 +9,11 @@ let boostOptions = [];
 let botOptions = [];
 export function defineStoreOptions() {
   //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice, boostID, boostPriceIncrease)
-  boostOptions.push(new Boost("3 x Multi", 3, 500, "ThreeMulti",3));
+  boostOptions.push(new Boost("3 x Multi", 3, 500, "ThreeMulti",5));
 
-  boostOptions.push(new Boost("3 x Multi", 3, 50000, "ThreeMulti",3));
+  boostOptions.push(new Boost("3 x Multi", 3, 50000, "ThreeMulti",5));
 
-  boostOptions.push(new Boost("3 x Multi", 3, 1500000, "ThreeMulti",3));
+  boostOptions.push(new Boost("3 x Multi", 3, 1500000, "ThreeMulti",5));
 
   //Add any other bots here constructor(botName,botIncrease, maxEntities, botPrice, botID,"botIcon",botPriceIncrease)
   botOptions.push(
@@ -203,7 +204,8 @@ export function updateStoreUI() {
     startAnimations([currentUpgrades[key].botID + "ProgressBar"]);
     document.getElementById([
       currentUpgrades[key].botID + "ProgressBarText",
-    ]).innerHTML = currentUpgrades[key].botRate + " / Second";
+    ]).innerHTML = returnLabel(currentUpgrades[key].botRate) + " / Second";
+
     document.getElementById([
       currentUpgrades[key].botID + "CounterDisplay",
     ]).innerHTML = currentUpgrades[currentUpgrades[key].botID].botEntities;
@@ -211,7 +213,7 @@ export function updateStoreUI() {
     document.getElementById([currentUpgrades[key].botID + "Button"]).innerHTML =
       currentUpgrades[currentUpgrades[key].botID].botName +
       " Price: " +
-      currentUpgrades[currentUpgrades[key].botID].botPrice;
+      returnLabel(currentUpgrades[currentUpgrades[key].botID].botPrice);
 
     let currentBoosts = currentUpgrades[key].botBoosts;
     for (altKey in currentBoosts) {
@@ -220,7 +222,7 @@ export function updateStoreUI() {
       ]).innerHTML =
         currentBoosts[altKey].boostName +
         " Price: " +
-        currentBoosts[altKey].boostPrice;
+        returnLabel(currentBoosts[altKey].boostPrice);
     }
   }
 }
