@@ -18,8 +18,10 @@ export function updateStatsUI() {
 }
 
 export function returnLabel(number) {
-    let possLabels = ["Thousand", "Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion","Nonillion"]
-    let treshVals = [10e2,10e5,10e8,10e11,10e14,10e17,10e20,10e23,10e26,10e29]
+    let possLabels = ["Thousand", "Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion",
+    "Nonillion","Decillion","Undecillion","Duodecillion","Tredecillion","Quattuordecillion", "Quindecillion","Sexdecillion","Septendecillion",
+    "Octodecillion","Novemdecillion","Vigintillion"]
+    let treshVals = [10e2, 10e5, 10e8, 10e11, 10e14, 10e17, 10e20, 10e23, 10e26, 10e29, 10e32, 10e35, 10e38, 10e41, 10e44, 10e47, 10e50, 10e53, 10e57, 10e60, 10e62]
     for (let i = 0; i < possLabels.length;i++) {
         if (number >= treshVals[i] && number < treshVals[i+1]) {
             return (number/treshVals[i]).toFixed(1) + " " + possLabels[i]
