@@ -25,7 +25,7 @@ export function returnLabel(number) {
             return (number/treshVals[i]).toFixed(1) + " " + possLabels[i]
         }
     } 
-    return number.toFixed(1)
+    return number
 }
 function loadPlayer() {
     let playerToLoad = CryptoJS.AES.decrypt(window.localStorage.getItem("player"),"secret").toString(CryptoJS.enc.Utf8)

@@ -7,6 +7,7 @@ let currentPlayer = {};
 
 let boostOptions = [];
 let botOptions = [];
+
 export function defineStoreOptions() {
   //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice, boostID, boostPriceIncrease)
   boostOptions.push(new Boost("3 x Multi", 3, 500, "ThreeMulti",5));
@@ -59,7 +60,7 @@ export function initStoreObjects(botOptions) {
 
     let itemCounter = document.createElement("p");
     itemCounter.id = botOptions[i].botID + "CounterDisplay";
-    itemCounter.innerHTML = botOptions[i].botEntities;
+    itemCounter.innerHTML = returnLabel(botOptions[i].botEntities);
 
     let progressBarShell = document.createElement("div");
     progressBarShell.id = botOptions[i].botID + "ProgressBarContainer";
@@ -67,7 +68,7 @@ export function initStoreObjects(botOptions) {
     let itemButton = document.createElement("button");
     itemButton.id = botOptions[i].botID + "Button";
     itemButton.innerHTML =
-      botOptions[i].botName + " Price: " + botOptions[i].botPrice;
+      botOptions[i].botName + " Price: " + returnLabel(botOptions[i].botPrice);
     itemButton.addEventListener("click", function () {
       addBots(botOptions[i]);
     });
@@ -77,12 +78,12 @@ export function initStoreObjects(botOptions) {
 
     let progressBarText = document.createElement("div");
     progressBarText.id = botOptions[i].botID + "ProgressBarText";
-    progressBarText.innerHTML = botOptions[i].botRate + " / Second";
+    progressBarText.innerHTML = returnLabel(botOptions[i].botRate) + " / Second";
 
     let boostButton = document.createElement("button");
     boostButton.id = botOptions[i].botID + boostOptions[i].boostID + "Button";
     boostButton.innerHTML =
-      boostOptions[i].boostName + " Price: " + boostOptions[i].boostPrice;
+      boostOptions[i].boostName + " Price: " + returnLabel(boostOptions[i].boostPrice);
     boostButton.addEventListener("click", function () {
       addBoost(botOptions[i], boostOptions[i]);
     });
@@ -208,7 +209,7 @@ export function updateStoreUI() {
 
     document.getElementById([
       currentUpgrades[key].botID + "CounterDisplay",
-    ]).innerHTML = currentUpgrades[currentUpgrades[key].botID].botEntities;
+    ]).innerHTML = returnLabel(currentUpgrades[currentUpgrades[key].botID].botEntities);
 
     document.getElementById([currentUpgrades[key].botID + "Button"]).innerHTML =
       currentUpgrades[currentUpgrades[key].botID].botName +
