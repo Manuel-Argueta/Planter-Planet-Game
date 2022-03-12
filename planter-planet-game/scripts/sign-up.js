@@ -42,6 +42,6 @@ function initPlayer() {
 
 //How to hide secret?
 function updateLocalStorage(player) {
-    let playerToUpload = CryptoJS.AES.encrypt(JSON.stringify(player),"secret")
+    let playerToUpload = CryptoJS.AES.encrypt(JSON.stringify(player), "secret")
     window.localStorage.setItem("player", playerToUpload);
 }

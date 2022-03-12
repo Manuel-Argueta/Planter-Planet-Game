@@ -8,10 +8,10 @@ const ethereumButton = document.getElementById('connectWalletButton');
 ethereumButton.addEventListener('click', getAccount);
 
 async function getAccount() {
-  initConnection()
-  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-  let account = accounts[0];
-  return account
+    initConnection()
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    let account = accounts[0];
+    return account
 }
 
 function initConnection() {

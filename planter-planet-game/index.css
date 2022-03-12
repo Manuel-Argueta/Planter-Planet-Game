@@ -1,4 +1,4 @@
-#progress-bar-container{
+#progress-bar-container {
     width: 50%;
     background-color: grey;
     overflow: hidden;
@@ -23,19 +23,22 @@
 }
 
 .botItem {
-    width:100px;
+    width: 100px;
 }
+
 .botIcon {
-    width:100px;
+    width: 100px;
 }
+
 #stageImage {
-    width:250px;
-    height:250px;
+    width: 250px;
+    height: 250px;
 }
 
 #main-nav-container {
     text-align: center;
 }
+
 #XPDisplay {
     float: left;
 }
@@ -45,5 +48,11 @@
 }
 
 #usernameDisplay {
-    float: right; 
+    float: right;
+}
+
+#upgradeShop {
+    overflow: scroll;
+    width: 100%;
+    height: 75%;
 }
