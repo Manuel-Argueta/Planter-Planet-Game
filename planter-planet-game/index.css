@@ -1,25 +1,54 @@
-#progress-bar-container {
-    width: 50%;
-    background-color: grey;
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+#container {
+    font-family: 'VT323', monospace;
+    color: white;
+    background-color: #262E2F;
     overflow: hidden;
+}
+
+#main-nav-container {
+    text-align: center;
+    background-color: #828282;
+}
+
+#progress-bar-container {
+    width: 70%;
+    height: 5%;
+    background: #828282;
+    /* opacity: 0.2; */
+    border-radius: 100px;
+    overflow: hidden;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 #stageProgressBar {
     width: 0%;
-    height: 30px;
-    background-color: green;
+    position: absolute;
+    height: 100%;
+    background-color: #63A941;
+    border-radius: 100px;
 }
 
 .botProgressBarContainer {
     width: 100%;
-    background-color: grey;
+    height: 5vh;
+    border-radius: 100px;
+    text-align: center;
     overflow: hidden;
+    background: #828282;
 }
+
+
+/* need to fox and make text appear always */
 
 .botProgressBar {
     width: 0%;
-    height: 30px;
-    background-color: green;
+    height: 100%;
+    border-radius: 100px;
+    background-color: #B3945F;
+    overflow: hidden;
 }
 
 .botItem {
@@ -30,13 +59,35 @@
     width: 100px;
 }
 
-#stageImage {
-    width: 250px;
-    height: 250px;
+#stageImageContainer {
+    background: #828282;
+    /* opacity: 0.2; */
+    border-radius: 50px;
+    width: 60%;
+    position: block;
+    margin-right: auto;
+    margin-left: auto;
+    height: 50vh;
+    margin-top: 5%;
 }
 
-#main-nav-container {
-    text-align: center;
+#stageImage {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#main-game-container {
+    height: 100vh;
+}
+
+#addXPButton {
+    background: #828282;
+    opacity: 0.3;
+    color: #63A941;
+    border-radius: 50px;
+    /* position: block; */
+    margin-right: auto;
+    margin-left: auto;
 }
 
 #XPDisplay {
@@ -49,10 +100,4 @@
 
 #usernameDisplay {
     float: right;
-}
-
-#upgradeShop {
-    overflow: scroll;
-    width: 100%;
-    height: 75%;
 }

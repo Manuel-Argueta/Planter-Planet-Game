@@ -137,7 +137,7 @@ function ascendRank(treesGrown, rankIndex) {
 
 function loadProgress() {
     progressBar.style.width = currentPlayer.currentBarXP + "%";
-    progressPercentage.innerHTML = currentPlayer.currentBarXP.toFixed(2) + "%";
+    //progressPercentage.innerHTML = currentPlayer.currentBarXP.toFixed(2) + "%";
 }
 
 // Loads the asset for the current trees stage
