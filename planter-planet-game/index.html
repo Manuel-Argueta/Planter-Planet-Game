@@ -23,7 +23,6 @@
                     <div id="progress-bar-container">
                         <div id="stageProgressBar"></div>
                     </div>
-                    <!-- <span id="stagePercentage"></span> -->
                     <div id="stageImageContainer">
                         <img id="stageImage" />
                     </div>
@@ -34,15 +33,21 @@
             <div class="col-4">
                 <div class="row">
                     <div id="main-stats-container">
+                        <div class = "statsCol">
                         <h3>Game Stats</h3>
                         <p id="rankDisplay"></p>
-                        <img id="playerAvatar" />
                         <p id="treesGrown"></p>
+                        </div>
+                        <div class = "statsCol">
+                            <!-- hardcoded (temp) will be the users nft aka ipfs link associated with user object -->
+                            <img id="playerAvatar" src = "./assets/farmer1-gray.png" />
+                        </div>
                     </div>
                 </div>
+                <hr>
                 <div class="row">
                     <div id="main-shop-container">
-                        <p id="upgradeTitle">Purchase Upgrades</p>
+                        <p id="upgradeTitle">Upgrade Shop</p>
                         <div class="row">
                             <div class="col">
                                 <div id="upgradeShop">

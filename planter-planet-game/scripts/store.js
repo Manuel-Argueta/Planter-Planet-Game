@@ -78,7 +78,7 @@ export function initStoreObjects(botOptions) {
 
         let progressBarText = document.createElement("div");
         progressBarText.id = botOptions[i].botID + "ProgressBarText";
-        progressBarText.innerHTML = returnLabel(botOptions[i].botRate) + " / Second";
+        progressBarText.innerHTML = returnLabel(botOptions[i].botRate) + " SOIL / Second";
 
         let boostButton = document.createElement("button");
         boostButton.id = botOptions[i].botID + boostOptions[i].boostID + "Button";
@@ -88,6 +88,7 @@ export function initStoreObjects(botOptions) {
             addBoost(botOptions[i], boostOptions[i]);
         });
 
+        boostButton.className = "boostButton"
         itemButton.className = "botButton";
         itemIcon.className = "botIcon";
         itemCounter.className = "botCounter";
@@ -204,7 +205,7 @@ export function updateStoreUI() {
         startAnimations([currentUpgrades[key].botID + "ProgressBar"]);
         document.getElementById([
             currentUpgrades[key].botID + "ProgressBarText",
-        ]).innerHTML = returnLabel(currentUpgrades[key].botRate) + " / Second";
+        ]).innerHTML = returnLabel(currentUpgrades[key].botRate) + " SOIL / Second";
 
         document.getElementById([
             currentUpgrades[key].botID + "CounterDisplay",
@@ -212,7 +213,7 @@ export function updateStoreUI() {
 
         document.getElementById([currentUpgrades[key].botID + "Button"]).innerHTML =
             currentUpgrades[currentUpgrades[key].botID].botName +
-            " Price: " +
+            " " +
             returnLabel(currentUpgrades[currentUpgrades[key].botID].botPrice);
 
         let currentBoosts = currentUpgrades[key].botBoosts;
@@ -220,8 +221,7 @@ export function updateStoreUI() {
             document.getElementById([
                     currentUpgrades[key].botID + currentBoosts[altKey].boostID + "Button",
                 ]).innerHTML =
-                currentBoosts[altKey].boostName +
-                " Price: " +
+                currentBoosts[altKey].boostName + " " + 
                 returnLabel(currentBoosts[altKey].boostPrice);
         }
     }

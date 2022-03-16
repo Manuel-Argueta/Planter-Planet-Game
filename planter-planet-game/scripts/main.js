@@ -145,7 +145,6 @@ function loadStage() {
     let treeToLoad = currentPlayer.currentTree;
     let treeStages = ["./assets/seedlingPhase.png", "./assets/sproutPhase.png", "./assets/saplingPhase.png", "./assets/youngPhase.png", "./assets/halfLife.png", "./assets/adultPhase.png", "./assets/maturePhase.png"]
     stageImage.style.width = treeToLoad.currentSize + "%";
-    stageImage.style.height = treeToLoad.currentSize + "%";
     treeToLoad.currentSize += 14.25
     stageImage.src = treeStages[treeToLoad.currentStage];
 }
