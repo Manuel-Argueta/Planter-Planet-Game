@@ -1,6 +1,7 @@
 const usernameDisplay = document.getElementById("usernameDisplay")
 const avatarDisplay = document.getElementById("playerAvatar")
 const rankDisplay = document.getElementById("rankDisplay")
+const treePhaseDisplay = document.getElementById("phaseDisplay")
 const treesGrownDisplay = document.getElementById("treesGrown")
 const soilDisplay = document.getElementById("soilDisplay")
 const XPDisplay = document.getElementById("XPDisplay")
@@ -10,8 +11,9 @@ let currentPlayer = {}
 export function updateStatsUI() {
     loadPlayer()
     usernameDisplay.innerHTML = currentPlayer.username;
-    avatarDisplay.src = currentPlayer.avatar;
+    //avatarDisplay.src = currentPlayer.avatar;
     rankDisplay.innerHTML = "Rank: " + currentPlayer.playerRank + " " + currentPlayer.rankLevel;
+    treePhaseDisplay.innerHTML = "Current Tree Phase: " + currentPlayer.currentTree.currentStageName;
     treesGrownDisplay.innerHTML = "Trees Grown: " + currentPlayer.treesGrown
     soilDisplay.innerHTML = "SOIL: " + returnLabel(currentPlayer.currentSOIL)
     XPDisplay.innerHTML = "Total XP: " + returnLabel(currentPlayer.totalXP)

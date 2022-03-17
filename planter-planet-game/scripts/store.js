@@ -10,11 +10,11 @@ let botOptions = [];
 
 export function defineStoreOptions() {
     //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice, boostID, boostPriceIncrease)
-    boostOptions.push(new Boost("2 x Multi", 2, 500, "twoMulti", 5));
+    boostOptions.push(new Boost("3 x Multi", 3, 500, "threeMulti", 5));
 
-    boostOptions.push(new Boost("2 x Multi", 2, 50000, "twoMulti", 5));
+    boostOptions.push(new Boost("3 x Multi", 3, 50000, "threeMulti", 5));
 
-    boostOptions.push(new Boost("2 x Multi", 2, 1500000, "twoMulti", 5));
+    boostOptions.push(new Boost("3 x Multi", 3, 1500000, "threeMulti", 5));
 
     //Add any other bots here constructor(botName,botIncrease, maxEntities, botPrice, botID,"botIcon",botPriceIncrease)
     botOptions.push(
@@ -221,7 +221,7 @@ export function updateStoreUI() {
             document.getElementById([
                     currentUpgrades[key].botID + currentBoosts[altKey].boostID + "Button",
                 ]).innerHTML =
-                currentBoosts[altKey].boostName + " " + 
+                currentBoosts[altKey].boostName + " " +
                 returnLabel(currentBoosts[altKey].boostPrice);
         }
     }
