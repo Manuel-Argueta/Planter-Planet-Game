@@ -7,6 +7,19 @@ window.onload = function() {
     initPlayer()
 };
 
+async function getAccount() {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    let account = accounts[0];
+    return account
+}
+
+function initConnection() {
+    if (ethereum.selectedAddress != null) {
+        return true
+    } else {
+        return false
+    }
+}
 beginButton.addEventListener("click", createNewPlayer);
 
 function createNewPlayer() {
@@ -32,10 +45,11 @@ function createNewPlayer() {
 }
 
 function initPlayer() {
-    if (window.localStorage.getItem("player") === null) {
+    if (window.localStorage.getItem("player") === null && initConnection() == true) {
         return
+    } else if (initConnection() == false) {
+        window.location.href = './connect.html'
     } else {
-        console.log(window.location)
         window.location.href = "../index.html"
     }
 }

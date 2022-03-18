@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+#pageContainer {
+    font-family: "VT323", monospace;
+    background: #262E2F;
+    height: 100vh;
+    padding-top: 10vh;
+}
+
+#signUpContainer {
+    width: 60vw;
+    color: white;
+    height: fit-content;
+    position: block;
+    margin: auto;
+    text-align: center;
+    margin-bottom: none;
+}

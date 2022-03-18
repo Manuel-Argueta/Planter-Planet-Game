@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+#pageContainer {
+    font-family: "VT323", monospace;
+    background: #262E2F;
+    height: 100vh;
+    padding-top: 10vh;
+}
+
+#connectContainer {
+    width: 60vw;
+    height: fit-content;
+    position: block;
+    margin: auto;
+    text-align: center;
+    margin-bottom: none;
+}
+
+#connectWalletButton {
+    background: #828282;
+    color: #FFFFFF;
+    font-size: 150%;
+    width: 70%;
+    border-radius: 20px;
+    margin: 5vh;
+}
+
+#metaMaskIcon {}
+
+#titleLogo {
+    color: #B3945F;
+}
