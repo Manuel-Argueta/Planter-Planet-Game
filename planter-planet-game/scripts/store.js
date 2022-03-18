@@ -45,7 +45,7 @@ export function defineStoreOptions() {
     return botOptions;
 }
 
-//Create a bunch of parent divs and span elements where neccesary
+//Create a bunch of parent divs and span elements where neccesary refactor
 export function initStoreObjects(botOptions) {
     loadPlayer();
     let parentElement = document.getElementById("upgradeShop");

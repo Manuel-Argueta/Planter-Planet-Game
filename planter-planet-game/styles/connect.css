@@ -24,8 +24,31 @@
     margin: 5vh;
 }
 
-#metaMaskIcon {}
+#gameLogo {
+    width:50vw;
+    position:relative;
+    -webkit-animation:glide 2s ease-in-out alternate infinite;
+}
 
+@-webkit-keyframes glide  {
+    from {
+       left:0px;
+       top:0px;
+    }
+    
+    to {
+       left:0px;
+       top:10px;
+    }
+ 
+ }
+
+#gameIcon {
+    position: absolute;
+    bottom: 1vh;
+    right: 1vw;
+    width: 3%;
+}
 #titleLogo {
     color: #B3945F;
 }

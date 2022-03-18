@@ -14,17 +14,22 @@
 <body>
     <div id="pageContainer">
         <div id="signUpContainer">
-            <h1>Select Your Avatar</h1>
+            <h1 id = "avatarLogo">Choose Your Avatar</h1>
             <div class="row">
-                <div class="col" id="avatarOne"> one</div>
-                <div class="col" id="avatarTwo"> two</div>
-                <div class="col" id="avatarThree"> three</div>
-                <div class="col" id="avatarFour"> four</div>
-                <div class="col" id="avatarFive"> five</div>
+                <div class="col"> <img id="AvatarOne"class = "avatarChoice" src = "../assets/farmerAvatarOne.png"/></div>
+                <div class="col"> <img id="AvatarTwo" class = "avatarChoice" src = "../assets/farmerAvatarTwo.png"/></div>
+                <div class="col"> <img id="AvatarThree"class = "avatarChoice" src = "../assets/farmerAvatarThree.png"/></div>
+                <div class="col"> <img id="AvatarFour"class = "avatarChoice" src = "../assets/farmerAvatarFour.png"/></div>
+                <div class="col"> <img id="AvatarFive"class = "avatarChoice" src = "../assets/farmerAvatarFive.png"/></div>
             </div>
+            <h1 id = "usernameLogo">Enter Your Username</h1>
             <input placeholder="Username" id="usernameField"></input>
-            <p>Note: Usernames cannot be changed in version v1.0.0-beta</p>
+            <div id="errorDisplay"></div>
             <button id="beginGame">Begin Planting!</button>
+            <p>Note: Usernames and avatars cannot be changed in version v1.0.0-beta</p>
+        </div>
+        <div id = "footer">
+            <img id="gameIcon" src="../assets/gameIcon.png">
         </div>
     </div>
 

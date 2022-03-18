@@ -3,8 +3,30 @@
     font-family: "VT323", monospace;
     background: #262E2F;
     height: 100vh;
+    text-align: center;
     padding-top: 10vh;
 }
+
+::placeholder { 
+    color: #FFFFFF;
+    opacity: 0.5;
+  }
+#usernameLogo, #avatarLogo {
+    color: #B3945F;
+    margin-bottom: 5vh;
+}
+
+  #beginGame {
+    background: #63A941;
+    border-radius: 20px;
+    width: 30%;
+    color: white;
+    font-size: 150%;
+    text-align: center;
+    margin-bottom: 2vh;
+    border:none;
+  }
+
 
 #signUpContainer {
     width: 60vw;
@@ -14,4 +36,35 @@
     margin: auto;
     text-align: center;
     margin-bottom: none;
+}
+
+#usernameField {
+    background: #828282;
+    border-radius: 20px;
+    width: 70%;
+    color: white;
+    font-size: 150%;
+    text-align: center;
+    margin-bottom: 2vh;
+}
+.row {
+    background-color: #494545;
+    padding: 25px;
+    margin-bottom: 5vh;
+}
+.col {
+    margin: 0px;
+}
+.avatarChoice {
+    width: 75%;
+    background-color:  #828282;
+
+}   
+
+
+#gameIcon {
+    position: absolute;
+    bottom: 1vh;
+    right: 1vw;
+    width: 3%;
 }

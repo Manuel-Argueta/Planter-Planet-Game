@@ -82,6 +82,7 @@ function checkTreeStage() {
         setup()
         return false;
     } else if (treeToLoad.currentStage == treeToLoad.treeStages.length - 1 || currentPlayer.cureenBarXP >= 100) {
+        // mint function here + last minute metamask connect if needed
         let newTree = new Tree();
         currentPlayer.currentTree = newTree;
         currentPlayer.currentBarXP = 0;
@@ -179,4 +180,5 @@ function hardReset() {
     clearInterval(xpUpdate)
     window.localStorage.clear()
     window.location.reload()
+    currentPlayer = {}
 }

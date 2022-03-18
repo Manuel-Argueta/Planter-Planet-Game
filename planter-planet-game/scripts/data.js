@@ -11,11 +11,11 @@ let currentPlayer = {}
 export function updateStatsUI() {
     loadPlayer()
     usernameDisplay.innerHTML = currentPlayer.username;
-    //avatarDisplay.src = currentPlayer.avatar;
-    rankDisplay.innerHTML = "Rank: " + currentPlayer.playerRank + " " + currentPlayer.rankLevel;
-    treePhaseDisplay.innerHTML = "Current Tree Phase: " + currentPlayer.currentTree.currentStageName;
-    treesGrownDisplay.innerHTML = "Trees Grown: " + currentPlayer.treesGrown
-    soilDisplay.innerHTML = "SOIL: " + returnLabel(currentPlayer.currentSOIL)
+    avatarDisplay.src = "./assets/" + currentPlayer.avatar + ".png";
+    rankDisplay.innerHTML = currentPlayer.playerRank + " " + currentPlayer.rankLevel;
+    treePhaseDisplay.innerHTML = currentPlayer.currentTree.currentStageName;
+    treesGrownDisplay.innerHTML = currentPlayer.treesGrown
+    soilDisplay.innerHTML = returnLabel(currentPlayer.currentSOIL)
     XPDisplay.innerHTML = "Total XP: " + returnLabel(currentPlayer.totalXP)
 }
 
