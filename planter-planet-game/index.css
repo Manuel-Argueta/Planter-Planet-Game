@@ -80,11 +80,15 @@
     width: 100px;
     background-color: #828282;
     border-radius: 100px;
+    float: left;
+    margin-bottom: 75px;
 }
+
 
 .botCounter {
     background-color: #828282;
-    width: 15%;
+    width: 5%;
+    position: absolute;
     height: fit-content;
     font-size: 75%;
     border-radius: 50%;
