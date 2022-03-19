@@ -36,7 +36,7 @@ window.onload = function() {
 
 
 function setup() {
-    loadStage();
+    loadStage()
     loadProgress();
     updateStatsUI();
 }
@@ -67,23 +67,23 @@ function updateXP() {
 
 function checkTreeStage() {
     loadPlayerProfile()
-    let treeToLoad = currentPlayer.currentTree;
-    if (treeToLoad.currentXP < treeToLoad.threshXP) {
+    if (currentPlayer.currentTree.currentXP < currentPlayer.currentTree.threshXP) {
         return true;
-    } else if (treeToLoad.currentXP >= treeToLoad.threshXP && treeToLoad.currentStage != 6) {
-        treeToLoad.currentXP = 0;
+    } else if (currentPlayer.currentTree.currentXP >= currentPlayer.currentTree.threshXP && currentPlayer.currentTree.currentStage != 6) {
+        increaseStageSize();
+        currentPlayer.currentTree.currentXP = 0;
         currentPlayer.currentBarXP = 0
-            //testing difficulty increase
-        treeToLoad.threshXP *= calcDifficultyFactor();
+        //testing difficulty increase
+        currentPlayer.currentTree.threshXP *= calcDifficultyFactor();
         progressBar.style.width = currentPlayer.currentBarXP + "%";
-        treeToLoad.currentStage++;
-        treeToLoad.currentStageName = treeToLoad.treeStages[treeToLoad.currentStage];
+        currentPlayer.currentTree.currentStage++;
+        currentPlayer.currentTree.currentStageName = currentPlayer.currentTree.treeStages[currentPlayer.currentTree.currentStage];
         updateLocalStorage(currentPlayer);
         setup()
         return false;
-    } else if (treeToLoad.currentStage == treeToLoad.treeStages.length - 1 || currentPlayer.cureenBarXP >= 100) {
+    } else if (currentPlayer.currentTree.currentStage == currentPlayer.currentTree.treeStages.length - 1 || currentPlayer.cureenBarXP >= 100) {
         // mint function here + last minute metamask connect if needed
-        let newTree = new Tree();
+        let newTree = new Tree(5);
         currentPlayer.currentTree = newTree;
         currentPlayer.currentBarXP = 0;
         currentPlayer.treesGrown++;
@@ -143,13 +143,18 @@ function loadProgress() {
 
 // Loads the asset for the current trees stage
 function loadStage() {
-    let treeToLoad = currentPlayer.currentTree;
+    loadPlayerProfile()
     let treeStages = ["./assets/seedlingPhase.png", "./assets/sproutPhase.png", "./assets/saplingPhase.png", "./assets/youngPhase.png", "./assets/halfLife.png", "./assets/adultPhase.png", "./assets/maturePhase.png"]
-    stageImage.style.width = treeToLoad.currentSize + "%";
-    treeToLoad.currentSize += 14.25
-    stageImage.src = treeStages[treeToLoad.currentStage];
+    stageImage.src = treeStages[currentPlayer.currentTree.currentStage];
+    stageImage.style.width = currentPlayer.currentTree.currentSize + "%";
+    updateLocalStorage(currentPlayer)
 }
 
+function increaseStageSize() {
+    loadPlayerProfile()
+    currentPlayer.currentTree.currentSize += 8
+    updateLocalStorage(currentPlayer)
+}
 //How to hide secret?
 function initPlayer() {
     if (window.localStorage.getItem("player") === null) {

@@ -12,7 +12,7 @@
     margin: 1%;
     height: fit-content;
     background-color: rgba( 130, 130, 130, 0.2);
-    font-size: 150%;
+    font-size: 1.25vw;
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -85,11 +85,12 @@
     text-align: center;
     margin-right: auto;
     margin-left: auto;
+    margin-top: 2%;
     font-size: 150%;
 }
 
 #upgradeTitle {
-    font-size: 150%;
+    font-size: 4vh;
     margin-top: -2vh;
 }
 
@@ -102,6 +103,7 @@
 .botProgressBarContainer {
     width: 90%;
     height: 5vh;
+    position: relative;
     border-radius: 100px;
     text-align: center;
     background-color: rgba( 130, 130, 130, 0.2);
@@ -115,29 +117,47 @@
     background-color: #b3945f;
     overflow: hidden;
 }
-
-.botIcon {
-    width: 80%;
-    background-color: rgba( 130, 130, 130, 0.2);
-    border-radius: 100px;
-    float: left;
+.botProgressBarLabel {
+  position: absolute;
+  font-size: 2.5vh;
+  top: 0.6vh;
+  width: 90%;
+  left: 1rem;
 }
 
-.botCounter {
-    background-color: rgba( 130, 130, 130, 0.5);
-    width: 5vw;
-    height: 5%;
+.botIcon {
     position: absolute;
-    font-size: 75%;
-    border-radius: 50%;
+    width: 70%;
+    background-color: rgba( 130, 130, 130, 0.2);
+    border-radius: 100px;
+    bottom: 0.3;
+    left: 0.5vw;
+}
+
+.botIconContainer {
+  position: relative;
+}
+.botCounterContainer {
+  position: absolute;
+  bottom:  0;
+  left: 1vw;
+  background-color: rgba( 130, 130, 130, 0.5);
+  border-radius: 50%;
+  width: 5vw;
+  height: fit-content;
+}
+.botCounter {
+    font-size: 1vw;
+    margin: -1px;
 }
 
 .botButton {
     background-color: rgba( 130, 130, 130, 0.2);
     border-radius: 10px;
-    width: 42%;
+    width: 40%;
     float: left;
-    margin-right: 5%;
+    margin-left: 4%;
+    margin-right: 2%;
     margin-top: 2%;
     font-size: 1.15vw;
     text-align: center;
@@ -158,8 +178,8 @@
 .boostButton {
     background: rgba( 99, 169, 65, 0.2);
     border-radius: 10px;
-    width: 42%;
-    margin-right: 5%;
+    width: 40%;
+  
     margin-top: 2%;
     font-size: 1.15vw;
     float: left;

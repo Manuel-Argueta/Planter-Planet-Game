@@ -52,14 +52,14 @@ function getChosenAvatar() {
 
 function getUserName() {
     const usernameField = document.getElementById("usernameField");
-    const userNameRegex =/^\S*$/
+    const userNameRegex =/^\S{0,15}$/
     if (usernameField.value == "") {
         errorDisplay.innerHTML = "Please enter a username."
         return false
     } else if (userNameRegex.test(usernameField.value) == true) {
         return usernameField.value
     } else {
-        errorDisplay.innerHTML = "Please enter a username without spaces."
+        errorDisplay.innerHTML = "Please enter a username without spaces and less than 15 characters."
         return false
     }
 }
@@ -78,10 +78,9 @@ function createNewPlayer() {
   if (currentAvatar != false) {
       let currentUsername = getUserName()
       if (currentUsername != false) {
-  let genesisTree = new Tree(14.25);
+  let genesisTree = new Tree(5);
   let newPlayer = {
     username: currentUsername,
-    //IPFS link for NFT minted upon game connection
     avatar: currentAvatar,
     rankIndex: 0,
     playerRank: "Dogwater Farmer",
