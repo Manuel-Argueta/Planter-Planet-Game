@@ -1,174 +1,226 @@
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 #container {
-  font-family: "VT323", monospace;
-  color: white;
-  background-color: #262e2f;
-  overflow: hidden;
+    font-family: "VT323", monospace;
+    color: white;
+    height: 100vh;
+    background-color: #262e2f;
+    overflow: hidden;
 }
 
 #main-nav-container {
-  text-align: center;
-  margin: 1%;
-  height: fit-content;
-  background-color: rgba(	130, 130, 130,0.2);
-  font-size: 150%;
-  padding-left: 30px;
-  padding-right: 30px;
+    text-align: center;
+    margin: 1%;
+    height: fit-content;
+    background-color: rgba( 130, 130, 130, 0.2);
+    font-size: 150%;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 #progress-bar-container {
-  width: 70%;
-  height: 7%;
-  background-color: rgba(	130, 130, 130,0.2);
-  border-radius: 100px;
-  position: relative;
-  overflow-x: hidden;
-  margin-right: auto;
-  margin-left: auto;
+    width: 70%;
+    height: 7%;
+    background-color: rgba( 130, 130, 130, 0.2);
+    border-radius: 100px;
+    position: relative;
+    overflow-x: hidden;
+    margin-right: auto;
+    margin-left: auto;
 }
-
 
 #stageProgressBar {
-  width: 0%;
-  position: relative;
-  height: 100%;
-  background-color: #63a941;
-  border-radius: 100px;
+    width: 0%;
+    position: relative;
+    height: 100%;
+    background-color: #63a941;
+    border-radius: 100px;
 }
 
-
 .statsCol {
-  text-align: center;
+    text-align: center;
 }
 
 #statsTitle {
-  color: white;
-  font-size: 1.75vw;
-  margin-bottom: 2vh;
+    color: white;
+    font-size: 1.75vw;
+    margin-bottom: 2vh;
 }
+
 .statsDisplay {
-  font-size: 1.15vw;
-  color: #b3945f;
+    font-size: 1.15vw;
+    color: #b3945f;
 }
 
 #rankDisplay,
 #phaseDisplay,
 #treesGrown {
-  font-size: 1.15vw;
-  color: white;
+    font-size: 1.15vw;
+    color: white;
 }
 
 #playerAvatarContainer {
-  width: fit-content;
-  position: relative;
-  background-color: rgba(	130, 130, 130,0.2);;
-  margin-right: 25%;
-  padding: 5%;
+    width: fit-content;
+    position: relative;
+    background-color: rgba( 130, 130, 130, 0.2);
+    ;
+    margin-right: 25%;
+    padding: 5%;
 }
 
 #playerAvatar {
-  width: 75%;
-  position: relative;
-  position: block;
+    width: 75%;
+    position: relative;
+    position: block;
 }
+
+.col-4 {
+    border-left: 1px solid rgba( 130, 130, 130, 0.3);
+    height: fit-content;
+}
+
 
 /* need to fix and make text appear always */
 
 #main-shop-container {
-  text-align: center;
-  font-size: 150%;
-  /* overflow: hidden;
-  height: 40vh; */
-}
-.botProgressBarContainer {
-  width: 100%;
-  height: 5vh;
-  border-radius: 100px;
-  text-align: center;
-  background-color: rgba(	130, 130, 130,0.2);
-}
-.botProgressBar {
-  width: 0%;
-  height: 100%;
-  border-radius: 100px;
-  font-size: 25px;
-  background-color: #b3945f;
-  overflow: hidden;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 150%;
 }
 
-.botItem {
-  width: 90%;
-  margin: 5%;
+#upgradeTitle {
+    font-size: 150%;
+    margin-top: -2vh;
+}
+
+.botContainer {
+    margin-right: 5vw;
+    margin-bottom: 3vh;
+    height: 20%;
+}
+
+.botProgressBarContainer {
+    width: 90%;
+    height: 5vh;
+    border-radius: 100px;
+    text-align: center;
+    background-color: rgba( 130, 130, 130, 0.2);
+}
+
+.botProgressBar {
+    width: 0%;
+    height: 100%;
+    border-radius: 100px;
+    font-size: 25px;
+    background-color: #b3945f;
+    overflow: hidden;
 }
 
 .botIcon {
-  width: 100px;
-  background-color: rgba(	130, 130, 130,0.2);
-  border-radius: 100px;
+    width: 80%;
+    background-color: rgba( 130, 130, 130, 0.2);
+    border-radius: 100px;
+    float: left;
 }
 
 .botCounter {
-  background-color: rgba(	130, 130, 130,0.5);
-  width: 5vw;
-  position: relative;
-  height: fit-content;
-  font-size: 75%;
-  border-radius: 50%;
+    background-color: rgba( 130, 130, 130, 0.5);
+    width: 5vw;
+    height: 5%;
+    position: absolute;
+    font-size: 75%;
+    border-radius: 50%;
 }
 
 .botButton {
-  background-color: rgba(	130, 130, 130,0.2);
-  border-radius: 10px;
-  border: none;
+    background-color: rgba( 130, 130, 130, 0.2);
+    border-radius: 10px;
+    width: 42%;
+    float: left;
+    margin-right: 5%;
+    margin-top: 2%;
+    font-size: 1.15vw;
+    text-align: center;
+    border: none;
+}
+
+.botButtonLabel {
+    color: white;
+    border: none;
+    margin-bottom: -5%;
+}
+
+.botButtonPrice {
+    color: #B3945F;
+    border: none;
 }
 
 .boostButton {
-  background: rgba(	99, 169, 65,0.2);
-  border-radius: 10px;
-  border: none;
+    background: rgba( 99, 169, 65, 0.2);
+    border-radius: 10px;
+    width: 42%;
+    margin-right: 5%;
+    margin-top: 2%;
+    font-size: 1.15vw;
+    float: left;
+    text-align: center;
+    border: none;
+}
+
+.boostButtonLabel {
+    color: white;
+    border: none;
+    margin-bottom: -5%;
+}
+
+.boostButtonPrice {
+    color: #B3945F;
+    border: none;
 }
 
 #stageImageContainer {
-  width: 60%;
-  background-color: rgba(	130, 130, 130,0.2);
-  border-radius: 50px;
-  position: relative;
-  margin-right: auto;
-  margin-left: auto;
-  height: 50vh;
-  margin-top: 5%;
+    width: 60%;
+    background-color: rgba( 130, 130, 130, 0.2);
+    text-align: center;
+    border-radius: 50px;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    height: 50vh;
+    margin-top: 5%;
 }
 
 #stageImage {
-  width: 5px;
+    position: absolute;
+    bottom: 0;
 }
 
 #main-game-container {
-  margin-top: 2%;
-  height: 100vh;
-  text-align: center;
+    margin-top: 2%;
+    height: 100vh;
+    text-align: center;
 }
 
 #addXPButtonContainer {
-  display: table;
-  width: 20%;
-  height: 10%;
-  margin-right: auto;
-  margin-left: auto;
-  overflow: hidden;
-  margin-top: 2%;
+    display: table;
+    width: 20%;
+    height: 10%;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+    margin-top: 2%;
 }
 
 #addXPButton {
-  display: table-cell;
-  vertical-align: middle;
-  color: #63a941;
-  border-radius: 50px;
-  background-color: rgba(	130, 130, 130,0.2);
-  position: relative;
-  font-size: 4vh;
-  font-weight: 200;
-  border: none;
+    display: table-cell;
+    vertical-align: middle;
+    color: #63a941;
+    border-radius: 50px;
+    background-color: rgba( 130, 130, 130, 0.2);
+    position: relative;
+    font-size: 4vh;
+    font-weight: 200;
+    border: none;
 }
 
 #addXPButton::selection {
@@ -177,20 +229,25 @@
 }
 
 #XPDisplay {
-  float: left;
+    float: left;
 }
 
 #soilDisplay {
-  color: #B3945F;
+    color: #B3945F;
 }
 
 #usernameDisplay {
-  float: right;
+    float: right;
 }
 
 #gameIcon {
-  position: absolute;
-  bottom: 1vh;
-  right: 1vw;
-  width: 3%;
+    position: absolute;
+    bottom: 1vh;
+    right: 1vw;
+    width: 3%;
+}
+
+hr.defaultDivider {
+    border-top: 1px solid rgba( 130, 130, 130, 0.2);
+    margin-right: 5%;
 }

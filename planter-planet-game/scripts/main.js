@@ -8,8 +8,8 @@ import { updateStoreUI } from "./store.js";
 // Getting the main HTML elements
 const stageImage = document.getElementById("stageImage");
 const progressBar = document.getElementById("stageProgressBar");
-const progressPercentage = document.getElementById("stagePercentage");
 const XPButton = document.getElementById("addXPButton");
+const hardResetButton = document.getElementById("hardResetButton")
 
 const DEFAULT_RANK = 3
     //Can be added to

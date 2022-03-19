@@ -54,6 +54,9 @@ export function initStoreObjects(botOptions) {
         let itemContainer = document.createElement("div");
         itemContainer.id = botOptions[i].botID + "Item";
 
+        let itemIconContainer = document.createElement("div")
+        let itemButtonsContainer = document.createElement("div")
+
         let itemIcon = document.createElement("img");
         itemIcon.id = botOptions[i].botID + "Icon";
         itemIcon.src = botOptions[i].botIcon;
@@ -62,46 +65,72 @@ export function initStoreObjects(botOptions) {
         itemCounter.id = botOptions[i].botID + "CounterDisplay";
         itemCounter.innerHTML = returnLabel(botOptions[i].botEntities);
 
-        let progressBarShell = document.createElement("div");
-        progressBarShell.id = botOptions[i].botID + "ProgressBarContainer";
-
         let itemButton = document.createElement("button");
+        let itemButtonLabel = document.createElement("div")
+        let itemButtonPrice = document.createElement("div")
         itemButton.id = botOptions[i].botID + "Button";
-        itemButton.innerHTML =
-            botOptions[i].botName + " Price: " + returnLabel(botOptions[i].botPrice);
+        itemButtonLabel.id = botOptions[i].botID + "ButtonLabel";
+        itemButtonPrice.id = botOptions[i].botID + "ButtonPrice";
+        itemButtonLabel.innerHTML = "Buy"
+        itemButtonPrice.innerHTML = returnLabel(botOptions[i].botPrice);
+        itemButton.appendChild(itemButtonLabel)
+        itemButton.appendChild(itemButtonPrice)
         itemButton.addEventListener("click", function() {
             addBots(botOptions[i]);
         });
 
+        let progressBarShell = document.createElement("div");
+        progressBarShell.id = botOptions[i].botID + "ProgressBarContainer";
+
         let progressBar = document.createElement("div");
         progressBar.id = botOptions[i].botID + "ProgressBar";
+
+        let progressBarLabel = document.createElement("div");
+        progressBarLabel.id = botOptions[i].botID + "ProgressBarLabel";
 
         let progressBarText = document.createElement("div");
         progressBarText.id = botOptions[i].botID + "ProgressBarText";
         progressBarText.innerHTML = returnLabel(botOptions[i].botRate) + " SOIL / Second";
 
         let boostButton = document.createElement("button");
+        let boostButtonLabel = document.createElement("div")
+        let boostButtonPrice = document.createElement("div")
         boostButton.id = botOptions[i].botID + boostOptions[i].boostID + "Button";
-        boostButton.innerHTML =
-            boostOptions[i].boostName + " Price: " + returnLabel(boostOptions[i].boostPrice);
+        boostButtonLabel.id = botOptions[i].botID + boostOptions[i].boostID + "ButtonLabel";
+        boostButtonPrice.id = botOptions[i].botID + boostOptions[i].boostID + "ButtonPrice";
+        boostButton.appendChild(boostButtonLabel)
+        boostButton.appendChild(boostButtonPrice)
+        boostButtonLabel.innerHTML = boostOptions[i].boostName
+        boostButtonPrice.innerHTML = returnLabel(boostOptions[i].boostPrice);
         boostButton.addEventListener("click", function() {
             addBoost(botOptions[i], boostOptions[i]);
         });
 
         boostButton.className = "boostButton"
+        boostButtonLabel.className = "boostButtonLabel"
+        boostButtonPrice.className = "boostButtonPrice"
         itemButton.className = "botButton";
+        itemButtonLabel.className = "botButtonLabel"
+        itemButtonPrice.className = "botButtonPrice"
         itemIcon.className = "botIcon";
         itemCounter.className = "botCounter";
+        progressBarLabel.className = "botProgressBarLabel";
         progressBarShell.className = "botProgressBarContainer";
         progressBar.className = "botProgressBar";
+        itemContainer.className = "botContainer row"
+        itemIconContainer.className = "botIconContainer col-3"
+        itemButtonsContainer.className = "botButtonsContainer col-9"
 
+        progressBarLabel.appendChild(progressBarShell)
         progressBarShell.appendChild(progressBar);
         progressBar.appendChild(progressBarText);
-        itemContainer.appendChild(progressBarShell);
-        itemContainer.appendChild(itemIcon);
-        itemContainer.appendChild(itemCounter);
-        itemContainer.appendChild(itemButton);
-        itemContainer.appendChild(boostButton);
+        itemButtonsContainer.appendChild(progressBarShell);
+        itemIconContainer.appendChild(itemIcon);
+        itemIconContainer.appendChild(itemCounter);
+        itemButtonsContainer.appendChild(itemButton);
+        itemButtonsContainer.appendChild(boostButton);
+        itemContainer.appendChild(itemIconContainer)
+        itemContainer.appendChild(itemButtonsContainer)
         parentElement.appendChild(itemContainer);
     }
 }
@@ -211,17 +240,14 @@ export function updateStoreUI() {
             currentUpgrades[key].botID + "CounterDisplay",
         ]).innerHTML = returnLabel(currentUpgrades[currentUpgrades[key].botID].botEntities);
 
-        document.getElementById([currentUpgrades[key].botID + "Button"]).innerHTML =
-            currentUpgrades[currentUpgrades[key].botID].botName +
-            " " +
+        document.getElementById([currentUpgrades[key].botID + "ButtonPrice"]).innerHTML =
             returnLabel(currentUpgrades[currentUpgrades[key].botID].botPrice);
 
         let currentBoosts = currentUpgrades[key].botBoosts;
         for (altKey in currentBoosts) {
             document.getElementById([
-                    currentUpgrades[key].botID + currentBoosts[altKey].boostID + "Button",
+                    currentUpgrades[key].botID + currentBoosts[altKey].boostID + "ButtonPrice",
                 ]).innerHTML =
-                currentBoosts[altKey].boostName + " " +
                 returnLabel(currentBoosts[altKey].boostPrice);
         }
     }
