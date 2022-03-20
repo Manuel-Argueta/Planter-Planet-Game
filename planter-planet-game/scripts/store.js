@@ -3,6 +3,8 @@ import Boost from "./objects/Boost.js";
 import { updateStatsUI } from "./data.js";
 import { returnLabel } from "./data.js";
 
+const buyButtonSound = new Audio("./assets/shopBuyEffect.mp3")
+buyButtonSound.volume = 0.01;
 let currentPlayer = {};
 
 let boostOptions = [];
@@ -104,7 +106,7 @@ export function initStoreObjects(botOptions) {
     boostButtonPrice.innerHTML = returnLabel(boostOptions[i].boostPrice);
     boostButton.addEventListener("click", function () {
       addBoost(botOptions[i], boostOptions[i]);
-    });
+    })
 
     boostButton.className = "boostButton";
     boostButtonLabel.className = "boostButtonLabel";
@@ -147,11 +149,13 @@ function addBots(currBot) {
     currentPlayer.currentSOIL >=
       currentPlayer.currentUpgrades[currBotID].botPrice
   ) {
+    buyButtonSound.play()
     manipBotData(currBotID);
   } else if (
     !currentPlayer.currentUpgrades.hasOwnProperty(currBotID) &&
     currentPlayer.currentSOIL >= currBot.botPrice
   ) {
+    buyButtonSound.play()
     currentPlayer.currentUpgrades[currBotID] = currBot;
     manipBotData(currBotID);
   } else {
@@ -185,6 +189,7 @@ function addBoost(botToUpgrade, currBoost) {
     currentPlayer.currentSOIL >=
       currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice
   ) {
+    buyButtonSound.play()
     manipBoostData(currBotID, currBoostID);
   } else if (
     currentPlayer.currentUpgrades[currBotID].botBoosts.hasOwnProperty(
@@ -192,6 +197,7 @@ function addBoost(botToUpgrade, currBoost) {
     ) == false &&
     currentPlayer.currentSOIL >= currBoost.boostPrice
   ) {
+    buyButtonSound.play()
     currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID] = currBoost;
     manipBoostData(currBotID, currBoostID);
   } else {

@@ -2,6 +2,7 @@ import Tree from "./objects/Tree.js";
 
 const beginButton = document.getElementById("beginGame");
 const errorDisplay = document.getElementById("errorDisplay")
+
 const possibleAvatarID = [
   "AvatarOne",
   "AvatarTwo",
@@ -83,7 +84,7 @@ function createNewPlayer() {
     username: currentUsername,
     avatar: currentAvatar,
     rankIndex: 0,
-    playerRank: "Dogwater Farmer",
+    playerRank: "Copper",
     rankLevel: 3,
     treesGrown: 0,
     currentSOIL: 0,

@@ -9,16 +9,21 @@ import { updateStoreUI } from "./store.js";
 const stageImage = document.getElementById("stageImage");
 const progressBar = document.getElementById("stageProgressBar");
 const XPButton = document.getElementById("addXPButton");
-const hardResetButton = document.getElementById("hardResetButton")
-
+// const hardResetButton = document.getElementById("hardResetButton")
+const xpSoundEffect= new Audio('./assets/xpClickSound.mp3')
+xpSoundEffect.volume = 0.2;
+const mainBackgroundMusic = new Audio("./assets/Y2Mate.mp3")
 const DEFAULT_RANK = 3
     //Can be added to
-const playerRanks = ["Copper", "Farmer", "Bio Hero", "Spawner", "Giga Farmer", "God"]
+const playerRanks = ["Copper", "Bronze", "Silver", "Gold","God Farmer"]
 
 
 // Creates event listeners for main inputs
-XPButton.addEventListener("click", function() { updateXP()  });
-hardResetButton.addEventListener("click", hardReset)
+XPButton.addEventListener("click", function() { 
+    updateXP() 
+    xpSoundEffect.play()
+});
+// hardResetButton.addEventListener("click", hardReset)
 
 // Defines empty object where the players information will be stored and manipulated
 let currentPlayer = {};
@@ -34,6 +39,11 @@ window.onload = function() {
     xpUpdate = setInterval(autoUpdateXP, 1000)
 };
 
+document.addEventListener("click", function(){
+    mainBackgroundMusic.loop = true;
+    mainBackgroundMusic.volume = 0.002;
+    mainBackgroundMusic.play()
+});
 
 function setup() {
     loadStage()
@@ -121,7 +131,7 @@ function ascendRank(treesGrown, rankIndex) {
     if (rankIndex == 0) { floorIndex = 0, capIndex = 2 } else if (rankIndex == 1) { floorIndex = 3, capIndex = 5 } else if (rankIndex == 2) { floorIndex = 6, capIndex = 8 } else if (rankIndex == 3) { floorIndex = 9, capIndex = 11 } else if (rankIndex == 4) { floorIndex = 12, capIndex = 14 }
 
     if (treesGrown > ranksTresh[ranksTresh.length - 1]) {
-        currentPlayer.playerRank = playerRanks[5]
+        currentPlayer.playerRank = playerRanks[4]
         currentPlayer.rankLevel = "";
         return
     } else if (treesGrown >= ranksTresh[floorIndex] && currentPlayer.rankLevel == DEFAULT_RANK) {
