@@ -9,7 +9,7 @@ import { updateStoreUI } from "./store.js";
 const stageImage = document.getElementById("stageImage");
 const progressBar = document.getElementById("stageProgressBar");
 const XPButton = document.getElementById("addXPButton");
-// const hardResetButton = document.getElementById("hardResetButton")
+const hardResetButton = document.getElementById("hardResetButton")
 const xpSoundEffect= new Audio('./assets/xpClickSound.mp3')
 xpSoundEffect.volume = 0.2;
 const mainBackgroundMusic = new Audio("./assets/Y2Mate.mp3")
@@ -23,7 +23,7 @@ XPButton.addEventListener("click", function() {
     updateXP() 
     xpSoundEffect.play()
 });
-// hardResetButton.addEventListener("click", hardReset)
+hardResetButton.addEventListener("click", hardReset)
 
 // Defines empty object where the players information will be stored and manipulated
 let currentPlayer = {};
@@ -190,6 +190,7 @@ function loadPlayerProfile() {
     }
 
 }
+
 
 function hardReset() {
     clearInterval(xpUpdate)

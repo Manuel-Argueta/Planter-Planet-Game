@@ -35,7 +35,7 @@ export function defineStoreOptions() {
     new Bot(
       "Ultra Droid",
       10000,
-      50000,
+      100000,
       "ultraDroid",
       "./assets/UltraDroid.png",
       3
