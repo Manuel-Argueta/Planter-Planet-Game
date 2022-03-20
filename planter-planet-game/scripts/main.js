@@ -13,11 +13,11 @@ const hardResetButton = document.getElementById("hardResetButton")
 
 const DEFAULT_RANK = 3
     //Can be added to
-const playerRanks = ["Dogwater Farmer", "Farmer", "Bio Hero", "Spawner", "Giga Farmer", "God"]
+const playerRanks = ["Copper", "Farmer", "Bio Hero", "Spawner", "Giga Farmer", "God"]
 
 
 // Creates event listeners for main inputs
-XPButton.addEventListener("click", function() { updateXP() });
+XPButton.addEventListener("click", function() { updateXP()  });
 hardResetButton.addEventListener("click", hardReset)
 
 // Defines empty object where the players information will be stored and manipulated

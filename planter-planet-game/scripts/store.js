@@ -14,7 +14,7 @@ export function defineStoreOptions() {
 
   boostOptions.push(new Boost("3 x Multi", 3, 50000, "threeMulti", 5));
 
-  boostOptions.push(new Boost("3 x Multi", 3, 1500000, "threeMulti", 5));
+  boostOptions.push(new Boost("3 x Multi", 3, 150000, "threeMulti", 5));
 
   //Add any other bots here constructor(botName,botIncrease, maxEntities, botPrice, botID,"botIcon",botPriceIncrease)
   botOptions.push(new Bot("Droid", 1, 5, "droid", "./assets/Droid.png", 3));
