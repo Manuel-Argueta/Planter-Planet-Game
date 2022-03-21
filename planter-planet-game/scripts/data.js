@@ -30,7 +30,7 @@ export function returnLabel(number) {
             return (number / treshVals[i]).toFixed(1) + " " + possLabels[i]
         }
     }
-    return number
+    return number.toFixed(1)
 }
 
 function loadPlayer() {
