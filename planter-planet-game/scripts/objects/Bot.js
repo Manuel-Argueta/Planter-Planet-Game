@@ -9,6 +9,7 @@ export default class Bot {
       this.botPrice = botPrice;
       this.botID = botID;
       this.botBoosts = {}
+      this.botBasePrice = botPrice;
       this.botPriceIncrease = priceIncrease
     }
 }

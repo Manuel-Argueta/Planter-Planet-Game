@@ -4,6 +4,7 @@ export default class Boost {
       this.boostName = boostName;
       this.boostMulti = boostMulti;
       this.boostEntities = 0;
+      this.boostBasePrice= boostPrice;
       this.boostPrice= boostPrice;
       this.boostID = boostID;
       this.boostPriceIncrease = priceIncrease

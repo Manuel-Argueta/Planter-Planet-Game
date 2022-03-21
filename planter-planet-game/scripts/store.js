@@ -12,14 +12,14 @@ let botOptions = [];
 
 export function defineStoreOptions() {
   //Add any other boosts here (boostName,boostMulti,maxEntities, boostPrice, boostID, boostPriceIncrease)
-  boostOptions.push(new Boost("3 x Multi", 3, 500, "threeMulti", 5));
+  boostOptions.push(new Boost("3 x Multi", 3, 500, "threeMulti", 3));
 
-  boostOptions.push(new Boost("3 x Multi", 3, 50000, "threeMulti", 5));
+  boostOptions.push(new Boost("3 x Multi", 3, 50000, "threeMulti", 3));
 
-  boostOptions.push(new Boost("3 x Multi", 3, 150000, "threeMulti", 5));
+  boostOptions.push(new Boost("3 x Multi", 3, 150000, "threeMulti", 3));
 
   //Add any other bots here constructor(botName,botIncrease, maxEntities, botPrice, botID,"botIcon",botPriceIncrease)
-  botOptions.push(new Bot("Droid", 1, 5, "droid", "./assets/Droid.png", 3));
+  botOptions.push(new Bot("Droid", 1, 5, "droid", "./assets/Droid.png", 1.4));
 
   botOptions.push(
     new Bot(
@@ -28,7 +28,7 @@ export function defineStoreOptions() {
       5000,
       "superDroid",
       "./assets/SuperDroid.png",
-      3
+      1.7
     )
   );
   botOptions.push(
@@ -38,7 +38,7 @@ export function defineStoreOptions() {
       100000,
       "ultraDroid",
       "./assets/UltraDroid.png",
-      3
+      1.9
     )
   );
 
@@ -165,12 +165,13 @@ function addBots(currBot) {
 
 function manipBotData(currBotID) {
   currentPlayer.currentUpgrades[currBotID].botEntities++;
+  let botBase = currentPlayer.currentUpgrades[currBotID].botBasePrice
+  let botPriceIncrease = currentPlayer.currentUpgrades[currBotID].botPriceIncrease
+  let botEntities = currentPlayer.currentUpgrades[currBotID].botEntities
   currentPlayer.currentSOIL -=
     currentPlayer.currentUpgrades[currBotID].botPrice;
-  currentPlayer.currentUpgrades[currBotID].botPrice *=
-    currentPlayer.currentUpgrades[currBotID].botPriceIncrease;
-  currentPlayer.currentUpgrades[currBotID].botRate +=
-    currentPlayer.currentUpgrades[currBotID].botIncrease;
+  currentPlayer.currentUpgrades[currBotID].botPrice = (botBase * (botPriceIncrease**botEntities))
+  currentPlayer.currentUpgrades[currBotID].botRate += currentPlayer.currentUpgrades[currBotID].botIncrease;
   getNewAutoXPRate(currentPlayer.currentUpgrades);
   updateLocalStorage(currentPlayer);
   updateStoreUI();
@@ -212,12 +213,13 @@ function manipBoostData(currBotID, currBoostID) {
     currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostMulti;
   currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID]
     .boostEntities++;
-  currentPlayer.currentSOIL -=
+    currentPlayer.currentSOIL -=
     currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice;
-  currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice *=
-    currentPlayer.currentUpgrades[currBotID].botBoosts[
-      currBoostID
-    ].boostPriceIncrease;
+
+    let boostEntities =  currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostEntities  
+    let boostPriceIncrease =     currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPriceIncrease;
+    let boostBasePrice = currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostBasePrice;
+    currentPlayer.currentUpgrades[currBotID].botBoosts[currBoostID].boostPrice = (boostBasePrice * (boostPriceIncrease**boostEntities))
   getNewAutoXPRate(currentPlayer.currentUpgrades);
   updateLocalStorage(currentPlayer);
   updateStoreUI();
