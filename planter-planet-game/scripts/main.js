@@ -10,17 +10,17 @@ const stageImage = document.getElementById("stageImage");
 const progressBar = document.getElementById("stageProgressBar");
 const XPButton = document.getElementById("addXPButton");
 // const hardResetButton = document.getElementById("hardResetButton")
-const xpSoundEffect= new Audio('./assets/xpClickSound.mp3')
+const xpSoundEffect = new Audio('./assets/xpClickSound.mp3')
 xpSoundEffect.volume = 0.2;
 const mainBackgroundMusic = new Audio("./assets/Y2Mate.mp3")
 const DEFAULT_RANK = 3
     //Can be added to
-const playerRanks = ["Copper", "Bronze", "Silver", "Gold","God Farmer"]
+const playerRanks = ["Copper", "Bronze", "Silver", "Gold", "God Farmer"]
 
 
 // Creates event listeners for main inputs
-XPButton.addEventListener("click", function() { 
-    updateXP() 
+XPButton.addEventListener("click", function() {
+    updateXP()
     xpSoundEffect.play()
 });
 // hardResetButton.addEventListener("click", hardReset)
@@ -39,7 +39,7 @@ window.onload = function() {
     xpUpdate = setInterval(autoUpdateXP, 1000)
 };
 
-document.addEventListener("click", function(){
+document.addEventListener("click", function() {
     mainBackgroundMusic.loop = true;
     mainBackgroundMusic.volume = 0.002;
     mainBackgroundMusic.play()
@@ -83,7 +83,7 @@ function checkTreeStage() {
         increaseStageSize();
         currentPlayer.currentTree.currentXP = 0;
         currentPlayer.currentBarXP = 0
-        //testing difficulty increase
+            //testing difficulty increase
         currentPlayer.currentTree.threshXP *= calcDifficultyFactor();
         progressBar.style.width = currentPlayer.currentBarXP + "%";
         currentPlayer.currentTree.currentStage++;
@@ -94,6 +94,10 @@ function checkTreeStage() {
     } else if (currentPlayer.currentTree.currentStage == currentPlayer.currentTree.treeStages.length - 1 || currentPlayer.cureenBarXP >= 100) {
         // mint function here + last minute metamask connect if needed
         let newTree = new Tree(5);
+        newTree.threshXP = currentPlayer.currentTree.threshXP
+            // currentPlayer.currentUpgrades = {}
+            // currentPlayer.currentAutoXPRate = 0;
+            // console.log(currentPlayer)
         currentPlayer.currentTree = newTree;
         currentPlayer.currentBarXP = 0;
         currentPlayer.treesGrown++;
@@ -119,14 +123,14 @@ function calcManualBarPercentage() {
 }
 
 function calcDifficultyFactor() {
-    let diffFactor = 1000;
+    let diffFactor = 10;
     //write algo to calc difficulty based on total XP??
     return diffFactor
 }
 
 function ascendRank(treesGrown, rankIndex) {
     //Updated in sync with addition of ranks
-    let ranksTresh = [5, 10, 15, 25, 35, 45, 60, 75, 90, 110, 130, 150, 175, 200, 225]
+    let ranksTresh = [5, 10, 15, 25, 35, 45, 60, 75, 90, 110, 130, 150]
     let floorIndex, capIndex = 0;
     if (rankIndex == 0) { floorIndex = 0, capIndex = 2 } else if (rankIndex == 1) { floorIndex = 3, capIndex = 5 } else if (rankIndex == 2) { floorIndex = 6, capIndex = 8 } else if (rankIndex == 3) { floorIndex = 9, capIndex = 11 } else if (rankIndex == 4) { floorIndex = 12, capIndex = 14 }
 
