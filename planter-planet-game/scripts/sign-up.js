@@ -112,7 +112,7 @@ function uploadNewPlayer(username,avatar) {
           currentSOIL: 0,
           currentTree: genesisTree,
           currentUpgrades: {},
-          currentXPRate: 10e5,
+          currentXPRate: 1,
           currentAutoXPRate: 0,
           currentBarXP: 0,
           totalXP: 0,
