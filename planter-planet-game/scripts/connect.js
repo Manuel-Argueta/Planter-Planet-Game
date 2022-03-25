@@ -1,7 +1,8 @@
-window.onload = function() {
-    getAccount()
-    initConnection()
-}
+// window.onload = function() {
+//     getAccount()
+//     initConnection()
+// }
+
 const ethereumButton = document.getElementById('connectWalletButton');
 
 

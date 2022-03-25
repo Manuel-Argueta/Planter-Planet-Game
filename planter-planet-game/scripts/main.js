@@ -41,7 +41,7 @@ window.onload = function() {
 
 document.addEventListener("click", function(){
     mainBackgroundMusic.loop = true;
-    mainBackgroundMusic.volume = 0.002;
+    mainBackgroundMusic.volume = 0.009;
     mainBackgroundMusic.play()
 });
 
